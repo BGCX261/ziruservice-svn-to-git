@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.ziroom.contract.mapper.ConfigMapper" >
+  <resultMap id="Config" type="cn.ziroom.contract.domain.Config" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="sys_room_id" property="sysRoomId" jdbcType="INTEGER" />
+    <result column="sys_house_id" property="sysHouseId" jdbcType="INTEGER" />
+    <result column="house_code" property="houseCode" jdbcType="VARCHAR" />
+    <result column="room_code" property="roomCode" jdbcType="VARCHAR" />
+    <result column="item_code" property="itemCode" jdbcType="VARCHAR" />
+    <result column="item_name" property="itemName" jdbcType="VARCHAR" />
+    <result column="item_brand" property="itemBrand" jdbcType="VARCHAR" />
+    <result column="item_num" property="itemNum" jdbcType="INTEGER" />
+    <result column="item_unit" property="itemUnit" jdbcType="VARCHAR" />
+    <result column="item_use_years" property="itemUseYears" jdbcType="VARCHAR" />
+    <result column="item_desc" property="itemDesc" jdbcType="VARCHAR" />
+    <result column="item_type" property="itemType" jdbcType="VARCHAR" />
+    <result column="item_spac" property="itemSpac" jdbcType="VARCHAR" />
+    <result column="pict_url" property="pictUrl" jdbcType="VARCHAR" />
+    <result column="flag" property="flag" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="column" >
+    id, house_code, room_code, item_code, item_name, item_brand, item_num, item_unit, 
+    item_use_years, item_desc, item_type, item_spac, pict_url, flag
+  </sql>
+  <select id="selectList" resultMap="Config" parameterType="cn.ziroom.contract.domain.Config" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="column" />
+    from t_config
+  </select>
+  <select id="selectById" resultMap="Config" parameterType="java.lang.Integer" >
+    select 
+    <include refid="column" />
+    from t_config
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectByCode" resultType="string" parameterType="cn.ziroom.contract.domain.Config" >
+    select item_code from t_config
+    where house_code = #{houseCode,jdbcType=VARCHAR}
+     and room_code = #{roomCode,jdbcType=VARCHAR} and item_code = #{itemCode,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteById" parameterType="java.lang.Integer" >
+    delete from t_config
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.ziroom.contract.domain.Config" useGeneratedKeys="true" keyProperty="id" >
+    insert into t_config
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="sysRoomId != null" >
+        sys_room_id,
+      </if>
+      <if test="sysHouseId != null" >
+        sys_house_id,
+      </if>
+      <if test="houseCode != null" >
+        house_code,
+      </if>
+      <if test="roomCode != null" >
+        room_code,
+      </if>
+      <if test="itemCode != null" >
+        item_code,
+      </if>
+      <if test="itemName != null" >
+        item_name,
+      </if>
+      <if test="itemBrand != null" >
+        item_brand,
+      </if>
+      <if test="itemNum != null" >
+        item_num,
+      </if>
+      <if test="itemUnit != null" >
+        item_unit,
+      </if>
+      <if test="itemUseYears != null" >
+        item_use_years,
+      </if>
+      <if test="itemDesc != null" >
+        item_desc,
+      </if>
+      <if test="itemType != null" >
+        item_type,
+      </if>
+      <if test="itemSpac != null" >
+        item_spac,
+      </if>
+      <if test="pictUrl != null" >
+        pict_url,
+      </if>
+      <if test="flag != null" >
+        flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="sysRoomId != null" >
+         #{sysRoomId,jdbcType=INTEGER},
+      </if>
+      <if test="sysHouseId != null" >
+         #{sysHouseId,jdbcType=INTEGER},
+      </if>
+      <if test="houseCode != null" >
+        #{houseCode,jdbcType=VARCHAR},
+      </if>
+      <if test="roomCode != null" >
+        #{roomCode,jdbcType=VARCHAR},
+      </if>
+      <if test="itemCode != null" >
+        #{itemCode,jdbcType=VARCHAR},
+      </if>
+      <if test="itemName != null" >
+        #{itemName,jdbcType=VARCHAR},
+      </if>
+      <if test="itemBrand != null" >
+        #{itemBrand,jdbcType=VARCHAR},
+      </if>
+      <if test="itemNum != null" >
+        #{itemNum,jdbcType=INTEGER},
+      </if>
+      <if test="itemUnit != null" >
+        #{itemUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="itemUseYears != null" >
+        #{itemUseYears,jdbcType=VARCHAR},
+      </if>
+      <if test="itemDesc != null" >
+        #{itemDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="itemType != null" >
+        #{itemType,jdbcType=VARCHAR},
+      </if>
+      <if test="itemSpac != null" >
+        #{itemSpac,jdbcType=VARCHAR},
+      </if>
+      <if test="pictUrl != null" >
+        #{pictUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="flag != null" >
+        #{flag,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="count" parameterType="cn.ziroom.contract.domain.Config" resultType="java.lang.Integer" >
+    select count(*) from t_config
+  </select>
+  <delete id="deleteByRoomCode" parameterType="int">
+  	delete from t_config where sys_room_id=#{sysRoomId,jdbcType=VARCHAR}
+  </delete>
+  <update id="update" parameterType="cn.ziroom.contract.domain.Config" >
+    update t_config
+    <set >
+      <if test="houseCode != null" >
+        house_code = #{houseCode,jdbcType=VARCHAR},
+      </if>
+      <if test="roomCode != null" >
+        room_code = #{roomCode,jdbcType=VARCHAR},
+      </if>
+      <if test="itemCode != null" >
+        item_code = #{itemCode,jdbcType=VARCHAR},
+      </if>
+      <if test="itemName != null" >
+        item_name = #{itemName,jdbcType=VARCHAR},
+      </if>
+      <if test="itemBrand != null" >
+        item_brand = #{itemBrand,jdbcType=VARCHAR},
+      </if>
+      <if test="itemNum != null" >
+        item_num = #{itemNum,jdbcType=INTEGER},
+      </if>
+      <if test="itemUnit != null" >
+        item_unit = #{itemUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="itemUseYears != null" >
+        item_use_years = #{itemUseYears,jdbcType=VARCHAR},
+      </if>
+      <if test="itemDesc != null" >
+        item_desc = #{itemDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="itemType != null" >
+        item_type = #{itemType,jdbcType=VARCHAR},
+      </if>
+      <if test="itemSpac != null" >
+        item_spac = #{itemSpac,jdbcType=VARCHAR},
+      </if>
+      <if test="pictUrl != null" >
+        pict_url = #{pictUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="flag != null" >
+        flag = #{flag,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

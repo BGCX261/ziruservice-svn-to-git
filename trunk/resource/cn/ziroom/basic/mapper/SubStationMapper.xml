@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.ziroom.basic.mapper.SubStationMapper">
+	<select id="selectByCode" resultType="string" parameterType="java.lang.String" >
+		select subway_code from t_sub_station
+		where subway_code = #{subwayCode,jdbcType=VARCHAR} and station_code = #{stationCode,jdbcType=VARCHAR}
+	</select>
+	<delete id="deleteByCode" parameterType="cn.ziroom.basic.domain.SubStation" >
+		delete from t_sub_station 
+		where subway_code = #{subwayCode,jdbcType=VARCHAR} and station_code = #{stationCode,jdbcType=VARCHAR}
+	</delete>
+	<insert id="insert" parameterType="cn.ziroom.basic.domain.SubStation" useGeneratedKeys="true" keyProperty="id" >
+		insert into t_sub_station
+		<trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="subwayCode != null" >
+			  subway_code,
+			</if>
+			<if test="stationCode != null" >
+			  station_code,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="subwayCode != null" >
+			  #{subwayCode,jdbcType=VARCHAR},
+			</if>
+			<if test="stationCode != null" >
+			  #{stationCode,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+</mapper>

@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.ziroom.system.mapper.UserMapper">
+	<resultMap id="User" type="cn.ziroom.system.domain.User">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="staffid" property="staffid" jdbcType="VARCHAR" />
+		<result column="account" property="account" jdbcType="VARCHAR" />
+		<result column="staff_pass" property="staffPass" jdbcType="VARCHAR" />
+		<result column="staff_name" property="staffName" jdbcType="VARCHAR" />
+		<result column="mobile_number" property="mobileNumber"
+			jdbcType="VARCHAR" />
+		<result column="manager_id" property="managerId" jdbcType="VARCHAR" />
+		<result column="group_name" property="groupName" jdbcType="VARCHAR" />
+		<result column="staff_type" property="staffType" jdbcType="VARCHAR" />
+		<result column="setid_jobcode" property="setidJobcode"
+			jdbcType="VARCHAR" />
+		<result column="staff_role" property="staffRole" jdbcType="VARCHAR" />
+		<result column="dept_code" property="deptCode" jdbcType="VARCHAR" />
+		<result column="depart_name" property="departName" jdbcType="VARCHAR" />
+		<result column="dept_path" property="deptPath" jdbcType="VARCHAR" />
+		<result column="dept_level" property="deptLevel" jdbcType="VARCHAR" />
+		<result column="status" property="status" jdbcType="VARCHAR" />
+	</resultMap>
+	<select id="count" resultType="int" parameterType="cn.ziroom.system.domain.User">
+		select count(id) from t_user
+	</select>
+	<select id="selectList" resultMap="User" parameterType="cn.ziroom.system.domain.User">
+		select * from t_user limit #{currentPage},#{line}
+	</select>
+	<select id="selectById" resultMap="User" parameterType="int">
+		select * from t_user where id = #{id,jdbcType=INTEGER}
+	</select>
+	<select id="searchUserByStaffId" resultMap="User" parameterType="string">
+		select * from t_user where staffid = #{staffid,jdbcType=VARCHAR}
+	</select>
+	<select id="selectByCode" resultType="string" parameterType="java.lang.String">
+		select staffid from t_user
+		where staffid = #{staffid,jdbcType=VARCHAR}
+	</select>
+	<insert id="insert" parameterType="cn.ziroom.system.domain.User"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into t_user
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="staffid != null">
+				staffid,
+			</if>
+			<if test="account != null">
+				account,
+			</if>
+			<if test="staffPass != null">
+				staff_pass,
+			</if>
+			<if test="staffName != null">
+				staff_name,
+			</if>
+			<if test="mobileNumber != null">
+				mobile_number,
+			</if>
+			<if test="managerId != null">
+				manager_id,
+			</if>
+			<if test="groupName != null">
+				group_name,
+			</if>
+			<if test="staffType != null">
+				staff_type,
+			</if>
+			<if test="setidJobcode != null">
+				setid_jobcode,
+			</if>
+			<if test="staffRole != null">
+				staff_role,
+			</if>
+			<if test="deptCode != null">
+				dept_code,
+			</if>
+			<if test="departName != null">
+				depart_name,
+			</if>
+			<if test="deptPath != null">
+				dept_path,
+			</if>
+			<if test="deptLevel != null">
+				dept_level,
+			</if>
+			<if test="status != null">
+				status,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="staffid != null">
+				#{staffid,jdbcType=VARCHAR},
+			</if>
+			<if test="account != null">
+				#{account,jdbcType=VARCHAR},
+			</if>
+			<if test="staffPass != null">
+				#{staffPass,jdbcType=VARCHAR},
+			</if>
+			<if test="staffName != null">
+				#{staffName,jdbcType=VARCHAR},
+			</if>
+			<if test="mobileNumber != null">
+				#{mobileNumber,jdbcType=VARCHAR},
+			</if>
+			<if test="managerId != null">
+				#{managerId,jdbcType=VARCHAR},
+			</if>
+			<if test="groupName != null">
+				#{groupName,jdbcType=VARCHAR},
+			</if>
+			<if test="staffType != null">
+				#{staffType,jdbcType=VARCHAR},
+			</if>
+			<if test="setidJobcode != null">
+				#{setidJobcode,jdbcType=VARCHAR},
+			</if>
+			<if test="staffRole != null">
+				#{staffRole,jdbcType=VARCHAR},
+			</if>
+			<if test="deptCode != null">
+				#{deptCode,jdbcType=VARCHAR},
+			</if>
+			<if test="departName != null">
+				#{departName,jdbcType=VARCHAR},
+			</if>
+			<if test="deptPath != null">
+				#{deptPath,jdbcType=VARCHAR},
+			</if>
+			<if test="deptLevel != null">
+				#{deptLevel,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				#{status,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="update" parameterType="cn.ziroom.system.domain.User">
+		update t_user
+		<set>
+			<if test="account != null">
+				account = #{account,jdbcType=VARCHAR},
+			</if>
+			<if test="staffPass != null">
+				staff_pass = #{staffPass,jdbcType=VARCHAR},
+			</if>
+			<if test="staffName != null">
+				staff_name = #{staffName,jdbcType=VARCHAR},
+			</if>
+			<if test="mobileNumber != null">
+				mobile_number = #{mobileNumber,jdbcType=VARCHAR},
+			</if>
+			<if test="managerId != null">
+				manager_id = #{managerId,jdbcType=VARCHAR},
+			</if>
+			<if test="groupName != null">
+				group_name = #{groupName,jdbcType=VARCHAR},
+			</if>
+			<if test="staffType != null">
+				staff_type = #{staffType,jdbcType=VARCHAR},
+			</if>
+			<if test="setidJobcode != null">
+				setid_jobcode = #{setidJobcode,jdbcType=VARCHAR},
+			</if>
+			<if test="staffRole != null">
+				staff_role = #{staffRole,jdbcType=VARCHAR},
+			</if>
+			<if test="deptCode != null">
+				dept_code = #{deptCode,jdbcType=VARCHAR},
+			</if>
+			<if test="departName != null">
+				depart_name = #{departName,jdbcType=VARCHAR},
+			</if>
+			<if test="deptPath != null">
+				dept_path = #{deptPath,jdbcType=VARCHAR},
+			</if>
+			<if test="deptLevel != null">
+				dept_level = #{deptLevel,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				status = #{status,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where staffid = #{staffid,jdbcType=VARCHAR}
+	</update>
+	<select id="selectByAccount" resultMap="User"
+		parameterType="cn.ziroom.system.domain.User">
+		select * from t_user
+		where account = #{account,jdbcType=VARCHAR} and staff_pass =
+		#{staffPass,jdbcType=VARCHAR}
+	</select>
+	<update id="updateUser" parameterType="cn.ziroom.system.domain.User">
+		update t_user
+		<set>
+			<if test="staffRole != null">
+				staff_role = #{staffRole,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+</mapper>

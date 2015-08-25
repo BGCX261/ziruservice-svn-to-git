@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+	<!-- 客户Action -->
+	<package name="code" extends="struts-default">
+		<action name="createCode" class="cn.ziroom.system.action.ValidatorCodeAction" method="createCode"/>
+		<action name="dict" class="cn.ziroom.system.action.DictAction"/>
+		<action name="login" class="loginAction" method="login" />
+		<action name="logout" class="loginAction" method="logout"/>
+		<action name="forward" class="loginAction" method="authority">
+			<result>/WEB-INF/ziru/main.jsp</result>
+			<result name="auterror">/WEB-INF/ziru/auterror.jsp</result>
+		</action>
+	</package>
+	<package name="login" extends="action-default">
+		<!-- 角色 -->
+		<action name="roleIndex">
+			<result>/WEB-INF/ziru/role/index.jsp</result>
+		</action>
+		<action name="searchRole" class="roleAction" method="searchRole"/>
+		<action name="searchRoleList" class="roleAction" method="searchRole"/>
+		<action name="findRole" class="roleAction" method="findRole">
+			<result>/WEB-INF/ziru/role/roleform.jsp</result>
+		</action>
+		<action name="getFunTree" class="roleAction" method="funcTree"/>
+		<action name="saveRole" class="roleAction" method="saveRole"/>
+		<action name="delRole" class="roleAction" method="delRole"/>
+		<!-- 用户 -->
+		<action name="userIndex">
+			<result>/WEB-INF/ziru/user/index.jsp</result>
+		</action>
+		<action name="searchUser" class="userAction" method="searchUser"/>
+		<action name="userPage" class="userAction" method="findUser">
+			<result>/WEB-INF/ziru/user/aut.jsp</result>
+		</action>
+		<action name="saveUser" class="userAction" method="saveUser"/>
+	</package>
+</struts>

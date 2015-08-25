@@ -1,0 +1,13 @@
+body {
+	background-image: url(../images/longhu.jpg);
+	background-repeat: no-repeat;
+	background-position: center;
+	background-attachment: fixed;
+}
+
+.easyui-dialog{
+ 	width:500px;
+ 	height:300px;
+ 	background:#fafafa;
+ 	overflow:hidden;
+}

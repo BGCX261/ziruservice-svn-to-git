@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.ziroom.basic.mapper.SubwayStationMapper" >
+	<select id="selectByCode" resultType="string" parameterType="java.lang.String" >
+		select station_code from t_subway_station
+		where station_code = #{stationCode,jdbcType=VARCHAR}
+	</select>
+	<select id="selectAll" resultType="cn.ziroom.basic.domain.SubwayStation">
+	  select station_code as stationCode,station_name as stationName from t_subway_station where flag='Y'
+	</select>
+	<insert id="insert" parameterType="cn.ziroom.basic.domain.SubwayStation" useGeneratedKeys="true" keyProperty="stationId" >
+	  insert into t_subway_station
+	  <trim prefix="(" suffix=")" suffixOverrides="," >
+	    <if test="stationName != null" >
+	      station_name,
+	    </if>
+	    <if test="stationCode != null" >
+	      station_code,
+	    </if>
+	    <if test="longitude != null" >
+	      longitude,
+	    </if>
+	    <if test="latitude != null" >
+	      latitude,
+	    </if>
+	  </trim>
+	  <trim prefix="values (" suffix=")" suffixOverrides="," >
+	    <if test="stationName != null" >
+	      #{stationName,jdbcType=VARCHAR},
+	    </if>
+	    <if test="stationCode != null" >
+	      #{stationCode,jdbcType=VARCHAR},
+	    </if>
+	    <if test="longitude != null" >
+	      #{longitude,jdbcType=REAL},
+	    </if>
+	    <if test="latitude != null" >
+	      #{latitude,jdbcType=REAL},
+	    </if>
+	  </trim>
+	</insert>
+	<update id="update" parameterType="cn.ziroom.basic.domain.SubwayStation" >
+	  update t_subway_station
+	  <set >
+	    <if test="stationName != null" >
+	      station_name = #{stationName,jdbcType=VARCHAR},
+	    </if>
+	    <if test="longitude != null" >
+	      longitude = #{longitude,jdbcType=REAL},
+	    </if>
+	    <if test="latitude != null" >
+	      latitude = #{latitude,jdbcType=REAL},
+	    </if>
+	    <if test="flag != null" >
+		    flag = #{flag,jdbcType=VARCHAR},
+		</if>
+	  </set>
+	  where station_code = #{stationCode,jdbcType=VARCHAR}
+	</update>
+</mapper>

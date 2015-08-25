@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+	<!--  -->
+	<package name="action-default" extends="struts-default">
+		<interceptors>
+			<!-- 自定义拦截器 -->
+			<interceptor name="generalInterceptor" class="cn.common.action.GeneralInterceptor"/>
+			<interceptor name="customerInterceptor" class="cn.common.action.CustomerInterceptor"/>
+			<!-- 定义struts2拦截器栈 -->
+			<interceptor-stack name="sslDefault">
+				<interceptor-ref name="customerInterceptor" />
+				<interceptor-ref name="defaultStack" />
+				<interceptor-ref name="generalInterceptor" />
+			</interceptor-stack>
+		</interceptors>
+		<default-interceptor-ref name="sslDefault" />
+		<global-results>
+			<result name="login">/index.jsp</result>
+		</global-results>
+	</package>
+	<package name="foward-default" extends="struts-default">
+		<interceptors>
+			<!-- 自定义拦截器 -->
+			<interceptor name="generalInterceptor" class="cn.common.action.GeneralInterceptor"/>
+			<!-- 定义struts2拦截器栈 -->
+			<interceptor-stack name="sslDefault">
+				<interceptor-ref name="defaultStack" />
+				<interceptor-ref name="generalInterceptor" />
+			</interceptor-stack>
+		</interceptors>
+		<default-interceptor-ref name="sslDefault" />
+		<global-results>
+			<result name="login">/index.jsp</result>
+		</global-results>
+	</package>
+</struts>

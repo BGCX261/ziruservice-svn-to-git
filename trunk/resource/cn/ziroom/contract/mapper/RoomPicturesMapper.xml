@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.ziroom.contract.mapper.RoomPicturesMapper" >
+  <resultMap id="RoomPictures" type="cn.ziroom.contract.domain.RoomPictures" >
+    <id column="hpimageid" property="hpimageid" jdbcType="INTEGER" />
+    <result column="sys_room_id" property="sysRoomId" jdbcType="INTEGER" />
+    <result column="sys_house_id" property="sysHouseId" jdbcType="INTEGER" />
+    <result column="room_code" property="roomCode" jdbcType="VARCHAR" />
+    <result column="image_name" property="imageName" jdbcType="VARCHAR" />
+    <result column="imagetype" property="imagetype" jdbcType="INTEGER" />
+    <result column="imagepath" property="imagepath" jdbcType="VARCHAR" />
+    <result column="image_cate" property="imageCate" jdbcType="VARCHAR" />
+    <result column="image_code" property="imageCode" jdbcType="VARCHAR" />
+    <result column="flag" property="flag" jdbcType="VARCHAR" />
+    <result column="house_code" property="houseCode" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="column" >
+    hpimageid, room_code, image_name, imagetype, imagepath, image_cate, image_code, flag, 
+    house_code
+  </sql>
+  <select id="selectList" resultMap="RoomPictures" parameterType="cn.ziroom.contract.domain.RoomPictures" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="column" />
+    from t_room_pictures
+  </select>
+  <select id="selectById" resultMap="RoomPictures" parameterType="java.lang.Integer" >
+    select 
+    <include refid="column" />
+    from t_room_pictures
+    where hpimageid = #{hpimageid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteById" parameterType="java.lang.Integer" >
+    delete from t_room_pictures
+    where hpimageid = #{hpimageid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByRoomCode" parameterType="cn.ziroom.contract.domain.RoomPictures" >
+    delete from t_room_pictures where sys_room_id = #{sysRoomId,jdbcType=VARCHAR} and sys_house_id = #{sysHouseId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="cn.ziroom.contract.domain.RoomPictures" useGeneratedKeys="true" keyProperty="hpimageid" >
+    insert into t_room_pictures
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="hpimageid != null" >
+        hpimageid,
+      </if>
+      <if test="sysRoomId != null" >
+        sys_room_id,
+      </if>
+      <if test="sysHouseId != null" >
+        sys_house_id,
+      </if>
+      <if test="roomCode != null" >
+        room_code,
+      </if>
+      <if test="imageName != null" >
+        image_name,
+      </if>
+      <if test="imagetype != null" >
+        imagetype,
+      </if>
+      <if test="imagepath != null" >
+        imagepath,
+      </if>
+      <if test="imageCate != null" >
+        image_cate,
+      </if>
+      <if test="imageCode != null" >
+        image_code,
+      </if>
+      <if test="flag != null" >
+        flag,
+      </if>
+      <if test="houseCode != null" >
+        house_code,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="hpimageid != null" >
+        #{hpimageid,jdbcType=INTEGER},
+      </if>
+      <if test="sysRoomId != null" >
+        #{sysRoomId,jdbcType=INTEGER},
+      </if>
+      <if test="sysHouseId != null" >
+        #{sysHouseId,jdbcType=INTEGER},
+      </if>
+      <if test="roomCode != null" >
+        #{roomCode,jdbcType=VARCHAR},
+      </if>
+      <if test="imageName != null" >
+        #{imageName,jdbcType=VARCHAR},
+      </if>
+      <if test="imagetype != null" >
+        #{imagetype,jdbcType=INTEGER},
+      </if>
+      <if test="imagepath != null" >
+        #{imagepath,jdbcType=VARCHAR},
+      </if>
+      <if test="imageCate != null" >
+        #{imageCate,jdbcType=VARCHAR},
+      </if>
+      <if test="imageCode != null" >
+        #{imageCode,jdbcType=VARCHAR},
+      </if>
+      <if test="flag != null" >
+        #{flag,jdbcType=VARCHAR},
+      </if>
+      <if test="houseCode != null" >
+        #{houseCode,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="count" parameterType="cn.ziroom.contract.domain.RoomPictures" resultType="java.lang.Integer" >
+    select count(*) from t_room_pictures
+  </select>
+  <update id="update" parameterType="cn.ziroom.contract.domain.RoomPictures" >
+    update t_room_pictures
+    <set >
+      <if test="roomCode != null" >
+        room_code = #{roomCode,jdbcType=VARCHAR},
+      </if>
+      <if test="imageName != null" >
+        image_name = #{imageName,jdbcType=VARCHAR},
+      </if>
+      <if test="imagetype != null" >
+        imagetype = #{imagetype,jdbcType=INTEGER},
+      </if>
+      <if test="imagepath != null" >
+        imagepath = #{imagepath,jdbcType=VARCHAR},
+      </if>
+      <if test="imageCate != null" >
+        image_cate = #{imageCate,jdbcType=VARCHAR},
+      </if>
+      <if test="imageCode != null" >
+        image_code = #{imageCode,jdbcType=VARCHAR},
+      </if>
+      <if test="flag != null" >
+        flag = #{flag,jdbcType=VARCHAR},
+      </if>
+      <if test="houseCode != null" >
+        house_code = #{houseCode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where hpimageid = #{hpimageid,jdbcType=INTEGER}
+  </update>
+  <update id="updateFlag" parameterType="list" >
+    update t_room_pictures set flag = 'N'
+    where image_code in
+    <foreach collection="list" index="index" open="(" separator="," close=")" item="item">
+    	#{item}
+    </foreach>
+  </update>
+</mapper>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.ziroom.basic.mapper.CycleFaceMapper" >
+	<select id="selectByCode" resultType="string" parameterType="java.lang.String" >
+		select face_code from t_cycle_face
+		where face_code = #{faceCode,jdbcType=VARCHAR}
+	</select>
+	<select id="selectAll" resultType="cn.ziroom.basic.domain.CycleFace">
+	  select face_code as faceCode,face_name as faceName from t_cycle_face where flag='Y'
+	</select>
+  <insert id="insert" parameterType="cn.ziroom.basic.domain.CycleFace" useGeneratedKeys="true" keyProperty="id" >
+    insert into t_cycle_face
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="faceName != null" >
+        face_name,
+      </if>
+      <if test="faceCode != null" >
+        face_code,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="faceName != null" >
+        #{faceName,jdbcType=VARCHAR},
+      </if>
+      <if test="faceCode != null" >
+        #{faceCode,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="update" parameterType="cn.ziroom.basic.domain.CycleFace" >
+    update t_cycle_face
+    <set >
+      <if test="faceName != null" >
+        face_name = #{faceName,jdbcType=VARCHAR},
+      </if>
+      <if test="flag != null" >
+		    flag = #{flag,jdbcType=VARCHAR},
+		</if>
+    </set>
+    where face_code = #{faceCode,jdbcType=VARCHAR}
+  </update>
+</mapper>

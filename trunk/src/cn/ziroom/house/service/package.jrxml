@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="package" language="groovy" pageWidth="595" pageHeight="942" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="168"/>
+	<style name="style1" fill="Solid" hAlign="Left" vAlign="Top" fontName="宋体" fontSize="11" pdfFontName="" isPdfEmbedded="false">
+		<paragraph lineSpacing="Double"/>
+	</style>
+	<parameter name="roomId" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="c1" class="java.lang.String"/>
+	<parameter name="c2" class="java.lang.String"/>
+	<parameter name="c3" class="java.lang.String"/>
+	<parameter name="c4" class="java.lang.String"/>
+	<parameter name="c5" class="java.lang.String"/>
+	<parameter name="c6" class="java.lang.String"/>
+	<parameter name="c7" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select
+  concat(t_house.house_code,'-',t_room.room_code) as roomcode,
+  t_room.room_id as roomid,
+  t_room.sys_room_id as sysroomid,
+  t_room.sys_house_id as syshouseid,
+  concat('自如友家白领公寓！',t_room.room_name) as roomname,
+  (select district_name from t_district where district_code=t_house.counties) as counties,
+  (select business_name from t_business where business_code=t_house.shopping) as shopping,
+  projectname as projectname,
+  t_area.address as address,
+  decorate_bedroom_num,
+  decorate_living_num,
+  decorate_kitchen_num,
+  floor,
+  total_floor,
+  t_room.room_area,
+  (select d_value from t_dict where t_house.build_type=t_dict.d_code and d_type='BUILDING_TYPE') as buildtype,
+  (select d_value from t_dict where t_room.room_position=t_dict.d_code and d_type='WINDOW_FACE') as roomposition,
+  t_room.rent_fee as fee,
+  pay_way as pay,
+  t_room.check_in_time as intime,
+  t_house.characteristics,
+  t_room.room_comment,
+  t_house.house_area,
+  t_house.ladder,
+  t_house.household,
+  (select d_value from t_dict where t_room.room_position=t_dict.d_code and d_type='HEATING_TYPE') as heating,
+  t_area.projectintroduce,
+  t_area.propcompanyname,
+  t_area.completionyear,
+  t_area.ugplotnum,
+  t_area.greenarearatio
+from t_house,t_room,t_area
+where t_house.sys_house_id=t_room.sys_house_id and t_room.room_type!='KITCHEN'
+and t_house.projectcode=t_area.projectcode and t_room.room_id=$P{roomId}]]>
+	</queryString>
+	<field name="roomcode" class="java.lang.String"/>
+	<field name="roomid" class="java.lang.Integer"/>
+	<field name="sysroomid" class="java.lang.Integer"/>
+	<field name="syshouseid" class="java.lang.Integer"/>
+	<field name="roomname" class="java.lang.String"/>
+	<field name="counties" class="java.lang.String"/>
+	<field name="shopping" class="java.lang.String"/>
+	<field name="projectname" class="java.lang.String"/>
+	<field name="address" class="java.lang.String"/>
+	<field name="decorate_bedroom_num" class="java.lang.Integer"/>
+	<field name="decorate_living_num" class="java.lang.Integer"/>
+	<field name="decorate_kitchen_num" class="java.lang.Integer"/>
+	<field name="floor" class="java.lang.String"/>
+	<field name="total_floor" class="java.lang.String"/>
+	<field name="room_area" class="java.lang.Float"/>
+	<field name="buildtype" class="java.lang.String"/>
+	<field name="roomposition" class="java.lang.String"/>
+	<field name="fee" class="java.math.BigDecimal"/>
+	<field name="pay" class="java.lang.String"/>
+	<field name="intime" class="java.sql.Timestamp"/>
+	<field name="characteristics" class="java.lang.String"/>
+	<field name="room_comment" class="java.lang.String"/>
+	<field name="house_area" class="java.lang.String"/>
+	<field name="ladder" class="java.lang.Integer"/>
+	<field name="household" class="java.lang.Integer"/>
+	<field name="heating" class="java.lang.String"/>
+	<field name="projectintroduce" class="java.lang.String"/>
+	<field name="propcompanyname" class="java.lang.String"/>
+	<field name="completionyear" class="java.lang.String"/>
+	<field name="ugplotnum" class="java.math.BigDecimal"/>
+	<field name="greenarearatio" class="java.math.BigDecimal"/>
+	<variable name="intime" class="java.lang.String">
+		<variableExpression><![CDATA[new SimpleDateFormat("yyyy-MM-dd").format($F{intime})]]></variableExpression>
+	</variable>
+	<variable name="variable1" class="java.lang.String"/>
+	<detail>
+		<band height="902" splitType="Stretch">
+			<textField isStretchWithOverflow="true">
+				<reportElement style="style1" stretchType="RelativeToBandHeight" x="0" y="31" width="555" height="373"/>
+				<textElement markup="styled">
+					<font fontName="宋体" size="11" pdfFontName="STSong-Light" pdfEncoding="Identity-H"/>
+					<paragraph lineSpacing="Double"/>
+				</textElement>
+				<textFieldExpression><![CDATA["房源标题：" + $F{roomname} + "\n" +
+"所在区域：" + $F{counties} + "\n" +
+"所在商圈：" + $F{shopping} + "\n" +
+"所在小区：" + $F{projectname} + "\n" +
+"小区地址：" + $F{address} + "\n" +
+"整套户型：" + $F{decorate_bedroom_num} + "室" + $F{decorate_living_num} + "厅" + $F{decorate_kitchen_num} + "卫\n" +
+"所在楼层：" + (($F{floor} != null && !$F{floor}.equals("0"))? "共" + $F{floor} + "层" : "") + "\n" +
+"  总楼层：共" + $F{total_floor} + "层\n" +
+"    面积：" + $F{room_area} + "㎡\n" +
+"装修程度：" + "精装修" + "\n" +
+"    朝向：" + $F{roomposition} + "\n" +
+"    租金：" + $F{fee} + "元/月\n" +
+"付款方式：" + $F{pay} + "\n" +
+"入住时间：" + ($V{intime}!=null?$V{intime}:"立即入住") + "\n"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="style1" isPrintRepeatedValues="false" x="0" y="433" width="555" height="469"/>
+				<textElement>
+					<font fontName="黑体" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["        本房源自如认证编号为：" +$F{roomcode}+",如有疑问可拔打自如客服热线400-100-1111或链家客服热线4007-001-001核实。\n" +
+"        自如友家白领公寓是由链家自如进行统一出租、统一管理、统一服务的高品质租住公寓，致力于为都市青年提供高品质租住生活。\n" +
+"        自如友家白领公寓都执行统一标准：所有房源均装修精美，配备全套品牌家电家具、免费无线宽带；每月有专人提供上门保洁，定期有专人上门进行安全排查，避免各种安全隐患。有物品损坏，我们还提供上门维修。房屋价格一房一价，实价出租，如果您可以半年付，还会享受零押金。同时为保障合租安全，所有租客都会经过身份认证，并且每个房间一客一锁！\n" +
+"        总之，即刻签约，拎包入住，省时方便！\n" +
+"        " + (($F{room_comment} != null && !$F{room_comment}.equals(""))?("本房最大特色：" + $F{room_comment}):"") + "\n" +
+"        " + (($F{house_area} != null && !$F{house_area}.equals(""))?("整个房屋面积：" + $F{house_area} + "㎡。"):"") + (($P{c7} != null && !$P{c7}.equals(""))?("相临房间中，" + $P{c7}):"") + "欢迎您的入住。\n" +
+"        更多房源请登录自如网（www.ziroom.com）查询或电询400-100-1111。"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="555" height="31" forecolor="#FF0000" backcolor="#CCCCCC"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[58与赶集端口必填信息（请按此顺序排列，方便端口发布时按顺序拷贝）]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="404" width="555" height="29" forecolor="#FF0000" backcolor="#CCCCCC"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[补充说明/房源描述]]></text>
+			</staticText>
+		</band>
+		<band height="902">
+			<textField isStretchWithOverflow="true">
+				<reportElement style="style1" stretchType="RelativeToTallestObject" x="0" y="36" width="555" height="866"/>
+				<textElement>
+					<font fontName="宋体" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA["A.	家具配置介绍 \n" +
+"        本房间：" + $P{c1} + "\n" +
+"      公共区域：" + $P{c2} + "\n" +
+"B、家电配置介绍 \n" +
+"        本房间：" + $P{c3} + "\n" +
+"      公共区域：" + $P{c4} + "\n" +
+"C、家居配置介绍  \n" +
+"        本房间：" + $P{c5} + "\n" +
+"      公共区域：" + $P{c6} + "\n"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="555" height="36" forecolor="#FF0000" backcolor="#CCCCCC"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[房屋配置/配套设施：（用于发布房源时勾选相关配置信息时参考）]]></text>
+			</staticText>
+		</band>
+	</detail>
+</jasperReport>

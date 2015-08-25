@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+	<package name="house" extends="action-default">
+		<!-- 房屋主界面 -->
+		<action name="houseIndex" class="houseAction" method="houseIndex">
+			<result>/WEB-INF/ziru/house/index.jsp</result>
+		</action>
+		<!-- 房间列表页 -->
+		<action name="roomListPage" class="houseAction" method="roomListPage">
+			<result>/WEB-INF/ziru/house/room.jsp</result>
+		</action>
+		<!-- 房屋搜索 -->
+		<action name="searchHouse" method="searchHouse" class="houseAction" />
+		<!-- 房屋发布表单界面 -->
+		<action name="housePubForm" class="houseAction" method="housePubForm">
+			<result>/WEB-INF/ziru/house/pubform.jsp</result>
+		</action>
+		<!-- 房屋发布 -->
+		<action name="pubHouse" method="pubHouse" class="houseAction" />
+		<!-- 房间发布表单界面 -->
+		<action name="roomPubForm" class="houseAction" method="roomPubForm">
+			<result>/WEB-INF/ziru/house/pubform.jsp</result>
+		</action>
+		<!-- 房间发布 -->
+		<action name="pubRoom" method="pubRoom" class="houseAction" />
+		<!-- 房间推荐 -->
+		<action name="recommendRoom" method="recommendRoom" class="houseAction" />
+		<!-- 房间优先展示 -->
+		<action name="priorityRoom" method="priorityRoom" class="houseAction" />
+		<!-- 房屋详情页界面 -->
+		<action name="houseView" class="houseAction" method="houseView">
+			<result>/WEB-INF/ziru/house/view.jsp</result>
+		</action>
+		<!-- 房屋编辑界面 -->
+		<action name="houseFind" class="houseAction" method="houseView">
+			<result>/WEB-INF/ziru/house/houseform.jsp</result>
+		</action>
+		<!-- 房屋保存 -->
+		<action name="saveHouse" method="saveHouse" class="houseAction" />
+		<!-- 房间保存 -->
+		<action name="saveRoom" method="saveRoom" class="houseAction" />
+		<action name="getDeptOrPerson" method="getDeptOrPerson" class="houseAction" />
+	</package>
+	<package name="manager" extends="struts-default">
+		<action name="contract" method="contract" class="managerAction" />
+		<action name="customer" method="customer" class="managerAction" />
+		<action name="roomPictures" method="roomPictures" class="managerAction" />
+		<action name="config" method="config" class="managerAction" />
+		<action name="cI">
+			<result>/WEB-INF/ziru/manager/cI.jsp</result>
+		</action>
+		<action name="uI">
+			<result>/WEB-INF/ziru/manager/uI.jsp</result>
+		</action>
+		<action name="rI">
+			<result>/WEB-INF/ziru/manager/rI.jsp</result>
+		</action>
+		<action name="fI">
+			<result>/WEB-INF/ziru/manager/fI.jsp</result>
+		</action>
+		<!-- 下载房源包 -->
+		<action name="downHouse" class="houseAction" method="downHouse">
+			<result name="success" type="stream">
+				<param name="contentType">application/octet-stream</param>
+				<param name="contentDisposition">attachment,filename=${fileName}</param>
+				<param name="inputName">inputStream</param>
+				<param name="bufferSize">4096</param>
+				<param name="contentLength">${size}</param>
+			</result>
+		</action>
+	</package>
+</struts>

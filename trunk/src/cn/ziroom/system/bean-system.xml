@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+     http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+     http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+     http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-3.0.xsd
+     http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+     http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
+	<!-- 数据访问接口 -->
+	<bean id="userMapper" parent="generalMapper">
+		<property name="mapperInterface" value="cn.ziroom.system.mapper.UserMapper" />
+	</bean>
+	<bean id="roleMapper" parent="generalMapper">
+		<property name="mapperInterface" value="cn.ziroom.system.mapper.RoleMapper" />
+	</bean>
+	<bean id="functionMapper" parent="generalMapper">
+		<property name="mapperInterface" value="cn.ziroom.system.mapper.FunctionMapper" />
+	</bean>
+	<!-- service -->
+	<bean id="userService" class="cn.ziroom.system.service.UserService">
+		<property name="userMapper" ref="userMapper" />
+		<property name="roleMapper" ref="roleMapper" />
+	</bean>
+	<bean id="roleService" class="cn.ziroom.system.service.RoleService">
+		<property name="roleMapper" ref="roleMapper" />
+		<property name="functionMapper" ref="functionMapper" />
+	</bean>
+	<!-- action -->
+	<bean id="loginAction" class="cn.ziroom.system.action.LoginAction" scope="prototype">
+		<property name="userService" ref="userService" />
+	</bean>
+	<bean id="roleAction" class="cn.ziroom.system.action.RoleAction" scope="prototype">
+		<property name="roleService" ref="roleService" />
+	</bean>
+	<bean id="userAction" class="cn.ziroom.system.action.UserAction" scope="prototype">
+		<property name="userService" ref="userService" />
+	</bean>
+</beans>

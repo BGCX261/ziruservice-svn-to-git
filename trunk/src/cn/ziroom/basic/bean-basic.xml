@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+     http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+     http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+     http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-3.0.xsd
+     http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+     http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
+	<!-- 数据访问接口 -->
+	<bean id="areaMapper" parent="generalMapper">
+		<property name="mapperInterface" value="cn.ziroom.basic.mapper.AreaMapper" />
+	</bean>
+	<bean id="businessMapper" parent="generalMapper">
+		<property name="mapperInterface" value="cn.ziroom.basic.mapper.BusinessMapper" />
+	</bean>
+	<bean id="cityMapper" parent="generalMapper">
+		<property name="mapperInterface" value="cn.ziroom.basic.mapper.CityMapper" />
+	</bean>
+	<bean id="districtBusinessMapper" parent="generalMapper">
+		<property name="mapperInterface" value="cn.ziroom.basic.mapper.DistrictBusinessMapper" />
+	</bean>
+	<bean id="districtMapper" parent="generalMapper">
+		<property name="mapperInterface" value="cn.ziroom.basic.mapper.DistrictMapper" />
+	</bean>
+	<bean id="provinceMapper" parent="generalMapper">
+		<property name="mapperInterface" value="cn.ziroom.basic.mapper.ProvinceMapper" />
+	</bean>
+	<bean id="subStationMapper" parent="generalMapper">
+		<property name="mapperInterface" value="cn.ziroom.basic.mapper.SubStationMapper" />
+	</bean>
+	<bean id="subwayMapper" parent="generalMapper">
+		<property name="mapperInterface" value="cn.ziroom.basic.mapper.SubwayMapper" />
+	</bean>
+	<bean id="subwayStationMapper" parent="generalMapper">
+		<property name="mapperInterface" value="cn.ziroom.basic.mapper.SubwayStationMapper" />
+	</bean>
+	<bean id="cycleMapper" parent="generalMapper">
+		<property name="mapperInterface" value="cn.ziroom.basic.mapper.CycleMapper" />
+	</bean>
+	<bean id="cycleFaceMapper" parent="generalMapper">
+		<property name="mapperInterface" value="cn.ziroom.basic.mapper.CycleFaceMapper" />
+	</bean>
+	<bean id="dictMapper" parent="generalMapper">
+		<property name="mapperInterface" value="cn.ziroom.basic.mapper.DictMapper" />
+	</bean>
+	<!-- service -->
+	<bean id="tradingAreaService" class="cn.ziroom.basic.service.TradingAreaService">
+		<property name="cityMapper" ref="cityMapper" />
+		<property name="businessMapper" ref="businessMapper" />
+		<property name="districtBusinessMapper" ref="districtBusinessMapper" />
+		<property name="provinceMapper" ref="provinceMapper" />
+		<property name="districtMapper" ref="districtMapper" />
+	</bean>
+	<bean id="subwayService" class="cn.ziroom.basic.service.SubwayService">
+		<property name="subStationMapper" ref="subStationMapper" />
+		<property name="subwayMapper" ref="subwayMapper" />
+		<property name="subwayStationMapper" ref="subwayStationMapper" />
+	</bean>
+	<bean id="cycleService" class="cn.ziroom.basic.service.CycleService">
+		<property name="cycleMapper" ref="cycleMapper" />
+		<property name="cycleFaceMapper" ref="cycleFaceMapper" />
+	</bean>
+	<bean id="areaService" class="cn.ziroom.basic.service.AreaService">
+		<property name="areaMapper" ref="areaMapper" />
+	</bean>
+</beans>

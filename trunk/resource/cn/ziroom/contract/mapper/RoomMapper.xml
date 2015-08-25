@@ -1,0 +1,1083 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.ziroom.contract.mapper.RoomMapper" >
+  <resultMap id="Room" type="cn.ziroom.contract.domain.Room" >
+    <id column="room_id" property="roomId" jdbcType="INTEGER" />
+    <result column="sys_room_id" property="sysRoomId" jdbcType="INTEGER" />
+    <result column="sys_house_id" property="sysHouseId" jdbcType="INTEGER" />
+    <result column="room_code" property="roomCode" jdbcType="VARCHAR" />
+    <result column="room_name" property="roomName" jdbcType="VARCHAR" />
+    <result column="house_code" property="houseCode" jdbcType="VARCHAR" />
+    <result column="room_type" property="roomType" jdbcType="VARCHAR" />
+    <result column="room_area" property="roomArea" jdbcType="REAL" />
+    <result column="room_position" property="roomPosition" jdbcType="VARCHAR" />
+    <result column="rent_fee" property="rentFee" jdbcType="DECIMAL" />
+    <result column="pay_way" property="payWay" jdbcType="VARCHAR" />
+    <result column="noise_effect" property="noiseEffect" jdbcType="VARCHAR" />
+    <result column="agent_phone" property="agentPhone" jdbcType="VARCHAR" />
+    <result column="agent_name" property="agentName" jdbcType="VARCHAR" />
+    <result column="steward_name" property="stewardName" jdbcType="VARCHAR" />
+    <result column="steward_phone" property="stewardPhone" jdbcType="VARCHAR" />
+    <result column="room_length" property="roomLength" jdbcType="VARCHAR" />
+    <result column="room_width" property="roomWidth" jdbcType="VARCHAR" />
+    <result column="room_height" property="roomHeight" jdbcType="VARCHAR" />
+    <result column="room_comment" property="roomComment" jdbcType="VARCHAR" />
+    <result column="saloon_length" property="saloonLength" jdbcType="REAL" />
+    <result column="saloon_width" property="saloonWidth" jdbcType="REAL" />
+    <result column="saloon_height" property="saloonHeight" jdbcType="REAL" />
+    <result column="saloon_total" property="saloonTotal" jdbcType="REAL" />
+    <result column="saloon_material" property="saloonMaterial" jdbcType="VARCHAR" />
+    <result column="saloon_master" property="saloonMaster" jdbcType="VARCHAR" />
+    <result column="saloon_position" property="saloonPosition" jdbcType="VARCHAR" />
+    <result column="saloon_desc" property="saloonDesc" jdbcType="VARCHAR" />
+    <result column="kitchen_length" property="kitchenLength" jdbcType="REAL" />
+    <result column="kitchen_width" property="kitchenWidth" jdbcType="REAL" />
+    <result column="kitchen_height" property="kitchenHeight" jdbcType="REAL" />
+    <result column="kitchen_total" property="kitchenTotal" jdbcType="REAL" />
+    <result column="kitchen_stove" property="kitchenStove" jdbcType="VARCHAR" />
+    <result column="kitchen_gastype" property="kitchenGastype" jdbcType="VARCHAR" />
+    <result column="kitchen_desc" property="kitchenDesc" jdbcType="VARCHAR" />
+    <result column="toliet_exist" property="tolietExist" jdbcType="CHAR" />
+    <result column="toilet_length" property="toiletLength" jdbcType="REAL" />
+    <result column="toilet_width" property="toiletWidth" jdbcType="REAL" />
+    <result column="toilet_height" property="toiletHeight" jdbcType="REAL" />
+    <result column="toilet_total" property="toiletTotal" jdbcType="REAL" />
+    <result column="toilet_window" property="toiletWindow" jdbcType="VARCHAR" />
+    <result column="toilet_curtain" property="toiletCurtain" jdbcType="VARCHAR" />
+    <result column="toilet_fan" property="toiletFan" jdbcType="VARCHAR" />
+    <result column="toilet_desc" property="toiletDesc" jdbcType="VARCHAR" />
+    <result column="balcony_exist" property="balconyExist" jdbcType="CHAR" />
+    <result column="balcony_length" property="balconyLength" jdbcType="REAL" />
+    <result column="balcony_width" property="balconyWidth" jdbcType="REAL" />
+    <result column="balcony_height" property="balconyHeight" jdbcType="REAL" />
+    <result column="balcony_total" property="balconyTotal" jdbcType="REAL" />
+    <result column="balcony_type" property="balconyType" jdbcType="VARCHAR" />
+    <result column="balcony_desc" property="balconyDesc" jdbcType="VARCHAR" />
+    <result column="garder_exist" property="garderExist" jdbcType="CHAR" />
+    <result column="garden_length" property="gardenLength" jdbcType="REAL" />
+    <result column="garden_width" property="gardenWidth" jdbcType="REAL" />
+    <result column="garden_height" property="gardenHeight" jdbcType="REAL" />
+    <result column="garden_total" property="gardenTotal" jdbcType="REAL" />
+    <result column="garden_type" property="gardenType" jdbcType="VARCHAR" />
+    <result column="garden_clay" property="gardenClay" jdbcType="VARCHAR" />
+    <result column="garden_desc" property="gardenDesc" jdbcType="VARCHAR" />
+    <result column="terrace_exist" property="terraceExist" jdbcType="CHAR" />
+    <result column="terrace_length" property="terraceLength" jdbcType="REAL" />
+    <result column="terrace_width" property="terraceWidth" jdbcType="REAL" />
+    <result column="terrace_height" property="terraceHeight" jdbcType="REAL" />
+    <result column="terrace_total" property="terraceTotal" jdbcType="REAL" />
+    <result column="terrace_desc" property="terraceDesc" jdbcType="VARCHAR" />
+    <result column="check_in_time" property="checkInTime" jdbcType="TIMESTAMP" />
+    <result column="is_top" property="isTop" jdbcType="VARCHAR" />
+    <result column="is_show" property="isShow" jdbcType="VARCHAR" />
+    <result column="is_available" property="isAvailable" jdbcType="VARCHAR" />
+    <result column="is_promotions" property="isPromotions" jdbcType="VARCHAR" />
+    <result column="rent_status" property="rentStatus" jdbcType="VARCHAR" />
+    <result column="room_status" property="roomStatus" jdbcType="VARCHAR" />
+    <result column="cust_sex" property="custSex" jdbcType="VARCHAR" />
+    <result column="cust_code" property="custCode" jdbcType="VARCHAR" />
+    <result column="flag" property="flag" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="column" >
+    room_id, room_code, room_name, house_code, room_type, room_area, room_position, rent_fee, 
+    pay_way, noise_effect, agent_phone, agent_name, steward_name, steward_phone, room_length, 
+    room_width, room_height, room_comment, saloon_length, saloon_width, saloon_height, 
+    saloon_total, saloon_material, saloon_master, saloon_position, saloon_desc, kitchen_length, 
+    kitchen_width, kitchen_height, kitchen_total, kitchen_stove, kitchen_gastype, kitchen_desc, 
+    toliet_exist, toilet_length, toilet_width, toilet_height, toilet_total, toilet_window, 
+    toilet_curtain, toilet_fan, toilet_desc, balcony_exist, balcony_length, balcony_width, 
+    balcony_height, balcony_total, balcony_type, balcony_desc, garder_exist, garden_length, 
+    garden_width, garden_height, garden_total, garden_type, garden_clay, garden_desc, 
+    terrace_exist, terrace_length, terrace_width, terrace_height, terrace_total, terrace_desc, 
+    check_in_time, is_top, is_show, is_available, is_promotions, rent_status, room_status, 
+    cust_sex, cust_code, flag
+  </sql>
+  <select id="selectList" resultMap="Room" parameterType="cn.ziroom.contract.domain.Room" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="column" />
+    from t_room
+  </select>
+  <select id="selectById" resultMap="Room" parameterType="java.lang.Integer" >
+    select 
+    <include refid="column" />
+    from t_room
+    where room_id = #{roomId,jdbcType=INTEGER}
+  </select>
+  <select id="selectByCode" resultMap="Room" parameterType="cn.ziroom.contract.domain.Room" >
+    select 
+    <include refid="column" />
+    from t_room
+    where sys_room_id = #{sysRoomId,jdbcType=INTEGER} and sys_house_id = #{sysHouseId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteById" parameterType="int" >
+    delete from t_room where sys_room_id = #{sysRoomId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.ziroom.contract.domain.Room" useGeneratedKeys="true" keyProperty="roomId" >
+    insert into t_room
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="roomId != null" >
+        room_id,
+      </if>
+      <if test="sysRoomId != null" >
+        sys_room_id,
+      </if>
+      <if test="sysHouseId != null" >
+        sys_house_id,
+      </if>
+      <if test="roomCode != null" >
+        room_code,
+      </if>
+      <if test="roomName != null" >
+        room_name,
+      </if>
+      <if test="houseCode != null" >
+        house_code,
+      </if>
+      <if test="roomType != null" >
+        room_type,
+      </if>
+      <if test="roomArea != null" >
+        room_area,
+      </if>
+      <if test="roomPosition != null" >
+        room_position,
+      </if>
+      <if test="rentFee != null" >
+        rent_fee,
+      </if>
+      <if test="payWay != null" >
+        pay_way,
+      </if>
+      <if test="noiseEffect != null" >
+        noise_effect,
+      </if>
+      <if test="agentPhone != null" >
+        agent_phone,
+      </if>
+      <if test="agentName != null" >
+        agent_name,
+      </if>
+      <if test="stewardName != null" >
+        steward_name,
+      </if>
+      <if test="stewardPhone != null" >
+        steward_phone,
+      </if>
+      <if test="roomLength != null" >
+        room_length,
+      </if>
+      <if test="roomWidth != null" >
+        room_width,
+      </if>
+      <if test="roomHeight != null" >
+        room_height,
+      </if>
+      <if test="roomComment != null" >
+        room_comment,
+      </if>
+      <if test="saloonLength != null" >
+        saloon_length,
+      </if>
+      <if test="saloonWidth != null" >
+        saloon_width,
+      </if>
+      <if test="saloonHeight != null" >
+        saloon_height,
+      </if>
+      <if test="saloonTotal != null" >
+        saloon_total,
+      </if>
+      <if test="saloonMaterial != null" >
+        saloon_material,
+      </if>
+      <if test="saloonMaster != null" >
+        saloon_master,
+      </if>
+      <if test="saloonPosition != null" >
+        saloon_position,
+      </if>
+      <if test="saloonDesc != null" >
+        saloon_desc,
+      </if>
+      <if test="kitchenLength != null" >
+        kitchen_length,
+      </if>
+      <if test="kitchenWidth != null" >
+        kitchen_width,
+      </if>
+      <if test="kitchenHeight != null" >
+        kitchen_height,
+      </if>
+      <if test="kitchenTotal != null" >
+        kitchen_total,
+      </if>
+      <if test="kitchenStove != null" >
+        kitchen_stove,
+      </if>
+      <if test="kitchenGastype != null" >
+        kitchen_gastype,
+      </if>
+      <if test="kitchenDesc != null" >
+        kitchen_desc,
+      </if>
+      <if test="tolietExist != null" >
+        toliet_exist,
+      </if>
+      <if test="toiletLength != null" >
+        toilet_length,
+      </if>
+      <if test="toiletWidth != null" >
+        toilet_width,
+      </if>
+      <if test="toiletHeight != null" >
+        toilet_height,
+      </if>
+      <if test="toiletTotal != null" >
+        toilet_total,
+      </if>
+      <if test="toiletWindow != null" >
+        toilet_window,
+      </if>
+      <if test="toiletCurtain != null" >
+        toilet_curtain,
+      </if>
+      <if test="toiletFan != null" >
+        toilet_fan,
+      </if>
+      <if test="toiletDesc != null" >
+        toilet_desc,
+      </if>
+      <if test="balconyExist != null" >
+        balcony_exist,
+      </if>
+      <if test="balconyLength != null" >
+        balcony_length,
+      </if>
+      <if test="balconyWidth != null" >
+        balcony_width,
+      </if>
+      <if test="balconyHeight != null" >
+        balcony_height,
+      </if>
+      <if test="balconyTotal != null" >
+        balcony_total,
+      </if>
+      <if test="balconyType != null" >
+        balcony_type,
+      </if>
+      <if test="balconyDesc != null" >
+        balcony_desc,
+      </if>
+      <if test="garderExist != null" >
+        garder_exist,
+      </if>
+      <if test="gardenLength != null" >
+        garden_length,
+      </if>
+      <if test="gardenWidth != null" >
+        garden_width,
+      </if>
+      <if test="gardenHeight != null" >
+        garden_height,
+      </if>
+      <if test="gardenTotal != null" >
+        garden_total,
+      </if>
+      <if test="gardenType != null" >
+        garden_type,
+      </if>
+      <if test="gardenClay != null" >
+        garden_clay,
+      </if>
+      <if test="gardenDesc != null" >
+        garden_desc,
+      </if>
+      <if test="terraceExist != null" >
+        terrace_exist,
+      </if>
+      <if test="terraceLength != null" >
+        terrace_length,
+      </if>
+      <if test="terraceWidth != null" >
+        terrace_width,
+      </if>
+      <if test="terraceHeight != null" >
+        terrace_height,
+      </if>
+      <if test="terraceTotal != null" >
+        terrace_total,
+      </if>
+      <if test="terraceDesc != null" >
+        terrace_desc,
+      </if>
+      <if test="checkInTime != null" >
+        check_in_time,
+      </if>
+      <if test="isTop != null" >
+        is_top,
+      </if>
+      <if test="isShow != null" >
+        is_show,
+      </if>
+      <if test="isAvailable != null" >
+        is_available,
+      </if>
+      <if test="isPromotions != null" >
+        is_promotions,
+      </if>
+      <if test="rentStatus != null" >
+        rent_status,
+      </if>
+      <if test="roomStatus != null" >
+        room_status,
+      </if>
+      <if test="custSex != null" >
+        cust_sex,
+      </if>
+      <if test="custCode != null" >
+        cust_code,
+      </if>
+      <if test="flag != null" >
+        flag,
+      </if>
+      <if test="radomNum != null" >
+        radom_num,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="roomId != null" >
+        #{roomId,jdbcType=INTEGER},
+      </if>
+      <if test="sysRoomId != null" >
+        #{sysRoomId,jdbcType=INTEGER},
+      </if>
+      <if test="sysHouseId != null" >
+        #{sysHouseId,jdbcType=INTEGER},
+      </if>
+      <if test="roomCode != null" >
+        #{roomCode,jdbcType=VARCHAR},
+      </if>
+      <if test="roomName != null" >
+        #{roomName,jdbcType=VARCHAR},
+      </if>
+      <if test="houseCode != null" >
+        #{houseCode,jdbcType=VARCHAR},
+      </if>
+      <if test="roomType != null" >
+        #{roomType,jdbcType=VARCHAR},
+      </if>
+      <if test="roomArea != null" >
+        #{roomArea,jdbcType=REAL},
+      </if>
+      <if test="roomPosition != null" >
+        #{roomPosition,jdbcType=VARCHAR},
+      </if>
+      <if test="rentFee != null" >
+        #{rentFee,jdbcType=DECIMAL},
+      </if>
+      <if test="payWay != null" >
+        #{payWay,jdbcType=VARCHAR},
+      </if>
+      <if test="noiseEffect != null" >
+        #{noiseEffect,jdbcType=VARCHAR},
+      </if>
+      <if test="agentPhone != null" >
+        #{agentPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="agentName != null" >
+        #{agentName,jdbcType=VARCHAR},
+      </if>
+      <if test="stewardName != null" >
+        #{stewardName,jdbcType=VARCHAR},
+      </if>
+      <if test="stewardPhone != null" >
+        #{stewardPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="roomLength != null" >
+        #{roomLength,jdbcType=VARCHAR},
+      </if>
+      <if test="roomWidth != null" >
+        #{roomWidth,jdbcType=VARCHAR},
+      </if>
+      <if test="roomHeight != null" >
+        #{roomHeight,jdbcType=VARCHAR},
+      </if>
+      <if test="roomComment != null" >
+        #{roomComment,jdbcType=VARCHAR},
+      </if>
+      <if test="saloonLength != null" >
+        #{saloonLength,jdbcType=REAL},
+      </if>
+      <if test="saloonWidth != null" >
+        #{saloonWidth,jdbcType=REAL},
+      </if>
+      <if test="saloonHeight != null" >
+        #{saloonHeight,jdbcType=REAL},
+      </if>
+      <if test="saloonTotal != null" >
+        #{saloonTotal,jdbcType=REAL},
+      </if>
+      <if test="saloonMaterial != null" >
+        #{saloonMaterial,jdbcType=VARCHAR},
+      </if>
+      <if test="saloonMaster != null" >
+        #{saloonMaster,jdbcType=VARCHAR},
+      </if>
+      <if test="saloonPosition != null" >
+        #{saloonPosition,jdbcType=VARCHAR},
+      </if>
+      <if test="saloonDesc != null" >
+        #{saloonDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="kitchenLength != null" >
+        #{kitchenLength,jdbcType=REAL},
+      </if>
+      <if test="kitchenWidth != null" >
+        #{kitchenWidth,jdbcType=REAL},
+      </if>
+      <if test="kitchenHeight != null" >
+        #{kitchenHeight,jdbcType=REAL},
+      </if>
+      <if test="kitchenTotal != null" >
+        #{kitchenTotal,jdbcType=REAL},
+      </if>
+      <if test="kitchenStove != null" >
+        #{kitchenStove,jdbcType=VARCHAR},
+      </if>
+      <if test="kitchenGastype != null" >
+        #{kitchenGastype,jdbcType=VARCHAR},
+      </if>
+      <if test="kitchenDesc != null" >
+        #{kitchenDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="tolietExist != null" >
+        #{tolietExist,jdbcType=CHAR},
+      </if>
+      <if test="toiletLength != null" >
+        #{toiletLength,jdbcType=REAL},
+      </if>
+      <if test="toiletWidth != null" >
+        #{toiletWidth,jdbcType=REAL},
+      </if>
+      <if test="toiletHeight != null" >
+        #{toiletHeight,jdbcType=REAL},
+      </if>
+      <if test="toiletTotal != null" >
+        #{toiletTotal,jdbcType=REAL},
+      </if>
+      <if test="toiletWindow != null" >
+        #{toiletWindow,jdbcType=VARCHAR},
+      </if>
+      <if test="toiletCurtain != null" >
+        #{toiletCurtain,jdbcType=VARCHAR},
+      </if>
+      <if test="toiletFan != null" >
+        #{toiletFan,jdbcType=VARCHAR},
+      </if>
+      <if test="toiletDesc != null" >
+        #{toiletDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="balconyExist != null" >
+        #{balconyExist,jdbcType=CHAR},
+      </if>
+      <if test="balconyLength != null" >
+        #{balconyLength,jdbcType=REAL},
+      </if>
+      <if test="balconyWidth != null" >
+        #{balconyWidth,jdbcType=REAL},
+      </if>
+      <if test="balconyHeight != null" >
+        #{balconyHeight,jdbcType=REAL},
+      </if>
+      <if test="balconyTotal != null" >
+        #{balconyTotal,jdbcType=REAL},
+      </if>
+      <if test="balconyType != null" >
+        #{balconyType,jdbcType=VARCHAR},
+      </if>
+      <if test="balconyDesc != null" >
+        #{balconyDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="garderExist != null" >
+        #{garderExist,jdbcType=CHAR},
+      </if>
+      <if test="gardenLength != null" >
+        #{gardenLength,jdbcType=REAL},
+      </if>
+      <if test="gardenWidth != null" >
+        #{gardenWidth,jdbcType=REAL},
+      </if>
+      <if test="gardenHeight != null" >
+        #{gardenHeight,jdbcType=REAL},
+      </if>
+      <if test="gardenTotal != null" >
+        #{gardenTotal,jdbcType=REAL},
+      </if>
+      <if test="gardenType != null" >
+        #{gardenType,jdbcType=VARCHAR},
+      </if>
+      <if test="gardenClay != null" >
+        #{gardenClay,jdbcType=VARCHAR},
+      </if>
+      <if test="gardenDesc != null" >
+        #{gardenDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="terraceExist != null" >
+        #{terraceExist,jdbcType=CHAR},
+      </if>
+      <if test="terraceLength != null" >
+        #{terraceLength,jdbcType=REAL},
+      </if>
+      <if test="terraceWidth != null" >
+        #{terraceWidth,jdbcType=REAL},
+      </if>
+      <if test="terraceHeight != null" >
+        #{terraceHeight,jdbcType=REAL},
+      </if>
+      <if test="terraceTotal != null" >
+        #{terraceTotal,jdbcType=REAL},
+      </if>
+      <if test="terraceDesc != null" >
+        #{terraceDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="checkInTime != null" >
+        #{checkInTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isTop != null" >
+        #{isTop,jdbcType=VARCHAR},
+      </if>
+      <if test="isShow != null" >
+        #{isShow,jdbcType=VARCHAR},
+      </if>
+      <if test="isAvailable != null" >
+        #{isAvailable,jdbcType=VARCHAR},
+      </if>
+      <if test="isPromotions != null" >
+        #{isPromotions,jdbcType=VARCHAR},
+      </if>
+      <if test="rentStatus != null" >
+        #{rentStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="roomStatus != null" >
+        #{roomStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="custSex != null" >
+        #{custSex,jdbcType=VARCHAR},
+      </if>
+      <if test="custCode != null" >
+        #{custCode,jdbcType=VARCHAR},
+      </if>
+      <if test="flag != null" >
+        #{flag,jdbcType=VARCHAR},
+      </if>
+      <if test="radomNum != null" >
+        #{radomNum,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="count" parameterType="cn.ziroom.contract.domain.Room" resultType="java.lang.Integer" >
+    select count(*) from t_room
+    where room_type !='KITCHEN'
+    <if test="houseCode != null" >
+      and house_code = #{houseCode,jdbcType=VARCHAR}
+    </if>
+  </select>
+  <update id="update" parameterType="cn.ziroom.contract.domain.Room" >
+    update t_room
+    <set >
+      <if test="roomCode != null" >
+        room_code = #{roomCode,jdbcType=VARCHAR},
+      </if>
+      <if test="sysRoomId != null" >
+        sys_room_id = #{sysRoomId,jdbcType=INTEGER},
+      </if>
+      <if test="sysHouseId != null" >
+        sys_house_id = #{sysHouseId,jdbcType=INTEGER},
+      </if>
+      <if test="roomName != null" >
+        room_name = #{roomName,jdbcType=VARCHAR},
+      </if>
+      <if test="houseCode != null" >
+        house_code = #{houseCode,jdbcType=VARCHAR},
+      </if>
+      <if test="roomType != null" >
+        room_type = #{roomType,jdbcType=VARCHAR},
+      </if>
+      <if test="roomArea != null" >
+        room_area = #{roomArea,jdbcType=REAL},
+      </if>
+      <if test="roomPosition != null" >
+        room_position = #{roomPosition,jdbcType=VARCHAR},
+      </if>
+      <if test="rentFee != null" >
+        rent_fee = #{rentFee,jdbcType=DECIMAL},
+      </if>
+      <if test="payWay != null" >
+        pay_way = #{payWay,jdbcType=VARCHAR},
+      </if>
+      <if test="noiseEffect != null" >
+        noise_effect = #{noiseEffect,jdbcType=VARCHAR},
+      </if>
+      <if test="agentPhone != null" >
+        agent_phone = #{agentPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="agentName != null" >
+        agent_name = #{agentName,jdbcType=VARCHAR},
+      </if>
+      <if test="stewardName != null" >
+        steward_name = #{stewardName,jdbcType=VARCHAR},
+      </if>
+      <if test="stewardPhone != null" >
+        steward_phone = #{stewardPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="roomLength != null" >
+        room_length = #{roomLength,jdbcType=VARCHAR},
+      </if>
+      <if test="roomWidth != null" >
+        room_width = #{roomWidth,jdbcType=VARCHAR},
+      </if>
+      <if test="roomHeight != null" >
+        room_height = #{roomHeight,jdbcType=VARCHAR},
+      </if>
+      <if test="roomComment != null" >
+        room_comment = #{roomComment,jdbcType=VARCHAR},
+      </if>
+      <if test="saloonLength != null" >
+        saloon_length = #{saloonLength,jdbcType=REAL},
+      </if>
+      <if test="saloonWidth != null" >
+        saloon_width = #{saloonWidth,jdbcType=REAL},
+      </if>
+      <if test="saloonHeight != null" >
+        saloon_height = #{saloonHeight,jdbcType=REAL},
+      </if>
+      <if test="saloonTotal != null" >
+        saloon_total = #{saloonTotal,jdbcType=REAL},
+      </if>
+      <if test="saloonMaterial != null" >
+        saloon_material = #{saloonMaterial,jdbcType=VARCHAR},
+      </if>
+      <if test="saloonMaster != null" >
+        saloon_master = #{saloonMaster,jdbcType=VARCHAR},
+      </if>
+      <if test="saloonPosition != null" >
+        saloon_position = #{saloonPosition,jdbcType=VARCHAR},
+      </if>
+      <if test="saloonDesc != null" >
+        saloon_desc = #{saloonDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="kitchenLength != null" >
+        kitchen_length = #{kitchenLength,jdbcType=REAL},
+      </if>
+      <if test="kitchenWidth != null" >
+        kitchen_width = #{kitchenWidth,jdbcType=REAL},
+      </if>
+      <if test="kitchenHeight != null" >
+        kitchen_height = #{kitchenHeight,jdbcType=REAL},
+      </if>
+      <if test="kitchenTotal != null" >
+        kitchen_total = #{kitchenTotal,jdbcType=REAL},
+      </if>
+      <if test="kitchenStove != null" >
+        kitchen_stove = #{kitchenStove,jdbcType=VARCHAR},
+      </if>
+      <if test="kitchenGastype != null" >
+        kitchen_gastype = #{kitchenGastype,jdbcType=VARCHAR},
+      </if>
+      <if test="kitchenDesc != null" >
+        kitchen_desc = #{kitchenDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="tolietExist != null" >
+        toliet_exist = #{tolietExist,jdbcType=CHAR},
+      </if>
+      <if test="toiletLength != null" >
+        toilet_length = #{toiletLength,jdbcType=REAL},
+      </if>
+      <if test="toiletWidth != null" >
+        toilet_width = #{toiletWidth,jdbcType=REAL},
+      </if>
+      <if test="toiletHeight != null" >
+        toilet_height = #{toiletHeight,jdbcType=REAL},
+      </if>
+      <if test="toiletTotal != null" >
+        toilet_total = #{toiletTotal,jdbcType=REAL},
+      </if>
+      <if test="toiletWindow != null" >
+        toilet_window = #{toiletWindow,jdbcType=VARCHAR},
+      </if>
+      <if test="toiletCurtain != null" >
+        toilet_curtain = #{toiletCurtain,jdbcType=VARCHAR},
+      </if>
+      <if test="toiletFan != null" >
+        toilet_fan = #{toiletFan,jdbcType=VARCHAR},
+      </if>
+      <if test="toiletDesc != null" >
+        toilet_desc = #{toiletDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="balconyExist != null" >
+        balcony_exist = #{balconyExist,jdbcType=CHAR},
+      </if>
+      <if test="balconyLength != null" >
+        balcony_length = #{balconyLength,jdbcType=REAL},
+      </if>
+      <if test="balconyWidth != null" >
+        balcony_width = #{balconyWidth,jdbcType=REAL},
+      </if>
+      <if test="balconyHeight != null" >
+        balcony_height = #{balconyHeight,jdbcType=REAL},
+      </if>
+      <if test="balconyTotal != null" >
+        balcony_total = #{balconyTotal,jdbcType=REAL},
+      </if>
+      <if test="balconyType != null" >
+        balcony_type = #{balconyType,jdbcType=VARCHAR},
+      </if>
+      <if test="balconyDesc != null" >
+        balcony_desc = #{balconyDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="garderExist != null" >
+        garder_exist = #{garderExist,jdbcType=CHAR},
+      </if>
+      <if test="gardenLength != null" >
+        garden_length = #{gardenLength,jdbcType=REAL},
+      </if>
+      <if test="gardenWidth != null" >
+        garden_width = #{gardenWidth,jdbcType=REAL},
+      </if>
+      <if test="gardenHeight != null" >
+        garden_height = #{gardenHeight,jdbcType=REAL},
+      </if>
+      <if test="gardenTotal != null" >
+        garden_total = #{gardenTotal,jdbcType=REAL},
+      </if>
+      <if test="gardenType != null" >
+        garden_type = #{gardenType,jdbcType=VARCHAR},
+      </if>
+      <if test="gardenClay != null" >
+        garden_clay = #{gardenClay,jdbcType=VARCHAR},
+      </if>
+      <if test="gardenDesc != null" >
+        garden_desc = #{gardenDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="terraceExist != null" >
+        terrace_exist = #{terraceExist,jdbcType=CHAR},
+      </if>
+      <if test="terraceLength != null" >
+        terrace_length = #{terraceLength,jdbcType=REAL},
+      </if>
+      <if test="terraceWidth != null" >
+        terrace_width = #{terraceWidth,jdbcType=REAL},
+      </if>
+      <if test="terraceHeight != null" >
+        terrace_height = #{terraceHeight,jdbcType=REAL},
+      </if>
+      <if test="terraceTotal != null" >
+        terrace_total = #{terraceTotal,jdbcType=REAL},
+      </if>
+      <if test="terraceDesc != null" >
+        terrace_desc = #{terraceDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="checkInTime != null" >
+        check_in_time = #{checkInTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isTop != null" >
+        is_top = #{isTop,jdbcType=VARCHAR},
+      </if>
+      <if test="isShow != null" >
+        is_show = #{isShow,jdbcType=VARCHAR},
+      </if>
+      <if test="isAvailable != null" >
+        is_available = #{isAvailable,jdbcType=VARCHAR},
+      </if>
+      <if test="isPromotions != null" >
+        is_promotions = #{isPromotions,jdbcType=VARCHAR},
+      </if>
+      <if test="rentStatus != null" >
+        rent_status = #{rentStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="roomStatus != null" >
+        room_status = #{roomStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="custSex != null" >
+        cust_sex = #{custSex,jdbcType=VARCHAR},
+      </if>
+      <if test="custCode != null" >
+        cust_code = #{custCode,jdbcType=VARCHAR},
+      </if>
+      <if test="flag != null" >
+        flag = #{flag,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where sys_room_id=#{sysRoomId,jdbcType=INTEGER} and sys_house_id = #{sysHouseId,jdbcType=INTEGER}
+  </update>
+  <update id="updateFlag" parameterType="cn.ziroom.contract.domain.Room" >
+    update t_room
+    set flag = #{flag,jdbcType=VARCHAR}
+    where sys_house_id=#{sysHouseId,jdbcType=INTEGER}
+    </update>
+  <update id="updateByHouseCode" parameterType="cn.ziroom.contract.domain.Room" >
+  	update t_room 
+  	 <set>
+      <if test="roomCode != null" >
+        room_code = #{roomCode,jdbcType=VARCHAR},
+      </if>
+      <if test="sysRoomId != null" >
+        sys_room_id = #{sysRoomId,jdbcType=INTEGER},
+      </if>
+      <if test="sysHouseId != null" >
+        sys_house_id = #{sysHouseId,jdbcType=INTEGER},
+      </if>
+      <if test="roomName != null" >
+        room_name = #{roomName,jdbcType=VARCHAR},
+      </if>
+      <if test="houseCode != null" >
+        house_code = #{houseCode,jdbcType=VARCHAR},
+      </if>
+      <if test="roomType != null" >
+        room_type = #{roomType,jdbcType=VARCHAR},
+      </if>
+      <if test="roomArea != null" >
+        room_area = #{roomArea,jdbcType=REAL},
+      </if>
+      <if test="roomPosition != null" >
+        room_position = #{roomPosition,jdbcType=VARCHAR},
+      </if>
+      <if test="rentFee != null" >
+        rent_fee = #{rentFee,jdbcType=DECIMAL},
+      </if>
+      <if test="payWay != null" >
+        pay_way = #{payWay,jdbcType=VARCHAR},
+      </if>
+      <if test="noiseEffect != null" >
+        noise_effect = #{noiseEffect,jdbcType=VARCHAR},
+      </if>
+      <if test="agentPhone != null" >
+        agent_phone = #{agentPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="agentName != null" >
+        agent_name = #{agentName,jdbcType=VARCHAR},
+      </if>
+      <if test="stewardName != null" >
+        steward_name = #{stewardName,jdbcType=VARCHAR},
+      </if>
+      <if test="stewardPhone != null" >
+        steward_phone = #{stewardPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="roomLength != null" >
+        room_length = #{roomLength,jdbcType=VARCHAR},
+      </if>
+      <if test="roomWidth != null" >
+        room_width = #{roomWidth,jdbcType=VARCHAR},
+      </if>
+      <if test="roomHeight != null" >
+        room_height = #{roomHeight,jdbcType=VARCHAR},
+      </if>
+      <if test="roomComment != null" >
+        room_comment = #{roomComment,jdbcType=VARCHAR},
+      </if>
+      <if test="saloonLength != null" >
+        saloon_length = #{saloonLength,jdbcType=REAL},
+      </if>
+      <if test="saloonWidth != null" >
+        saloon_width = #{saloonWidth,jdbcType=REAL},
+      </if>
+      <if test="saloonHeight != null" >
+        saloon_height = #{saloonHeight,jdbcType=REAL},
+      </if>
+      <if test="saloonTotal != null" >
+        saloon_total = #{saloonTotal,jdbcType=REAL},
+      </if>
+      <if test="saloonMaterial != null" >
+        saloon_material = #{saloonMaterial,jdbcType=VARCHAR},
+      </if>
+      <if test="saloonMaster != null" >
+        saloon_master = #{saloonMaster,jdbcType=VARCHAR},
+      </if>
+      <if test="saloonPosition != null" >
+        saloon_position = #{saloonPosition,jdbcType=VARCHAR},
+      </if>
+      <if test="saloonDesc != null" >
+        saloon_desc = #{saloonDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="kitchenLength != null" >
+        kitchen_length = #{kitchenLength,jdbcType=REAL},
+      </if>
+      <if test="kitchenWidth != null" >
+        kitchen_width = #{kitchenWidth,jdbcType=REAL},
+      </if>
+      <if test="kitchenHeight != null" >
+        kitchen_height = #{kitchenHeight,jdbcType=REAL},
+      </if>
+      <if test="kitchenTotal != null" >
+        kitchen_total = #{kitchenTotal,jdbcType=REAL},
+      </if>
+      <if test="kitchenStove != null" >
+        kitchen_stove = #{kitchenStove,jdbcType=VARCHAR},
+      </if>
+      <if test="kitchenGastype != null" >
+        kitchen_gastype = #{kitchenGastype,jdbcType=VARCHAR},
+      </if>
+      <if test="kitchenDesc != null" >
+        kitchen_desc = #{kitchenDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="tolietExist != null" >
+        toliet_exist = #{tolietExist,jdbcType=CHAR},
+      </if>
+      <if test="toiletLength != null" >
+        toilet_length = #{toiletLength,jdbcType=REAL},
+      </if>
+      <if test="toiletWidth != null" >
+        toilet_width = #{toiletWidth,jdbcType=REAL},
+      </if>
+      <if test="toiletHeight != null" >
+        toilet_height = #{toiletHeight,jdbcType=REAL},
+      </if>
+      <if test="toiletTotal != null" >
+        toilet_total = #{toiletTotal,jdbcType=REAL},
+      </if>
+      <if test="toiletWindow != null" >
+        toilet_window = #{toiletWindow,jdbcType=VARCHAR},
+      </if>
+      <if test="toiletCurtain != null" >
+        toilet_curtain = #{toiletCurtain,jdbcType=VARCHAR},
+      </if>
+      <if test="toiletFan != null" >
+        toilet_fan = #{toiletFan,jdbcType=VARCHAR},
+      </if>
+      <if test="toiletDesc != null" >
+        toilet_desc = #{toiletDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="balconyExist != null" >
+        balcony_exist = #{balconyExist,jdbcType=CHAR},
+      </if>
+      <if test="balconyLength != null" >
+        balcony_length = #{balconyLength,jdbcType=REAL},
+      </if>
+      <if test="balconyWidth != null" >
+        balcony_width = #{balconyWidth,jdbcType=REAL},
+      </if>
+      <if test="balconyHeight != null" >
+        balcony_height = #{balconyHeight,jdbcType=REAL},
+      </if>
+      <if test="balconyTotal != null" >
+        balcony_total = #{balconyTotal,jdbcType=REAL},
+      </if>
+      <if test="balconyType != null" >
+        balcony_type = #{balconyType,jdbcType=VARCHAR},
+      </if>
+      <if test="balconyDesc != null" >
+        balcony_desc = #{balconyDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="garderExist != null" >
+        garder_exist = #{garderExist,jdbcType=CHAR},
+      </if>
+      <if test="gardenLength != null" >
+        garden_length = #{gardenLength,jdbcType=REAL},
+      </if>
+      <if test="gardenWidth != null" >
+        garden_width = #{gardenWidth,jdbcType=REAL},
+      </if>
+      <if test="gardenHeight != null" >
+        garden_height = #{gardenHeight,jdbcType=REAL},
+      </if>
+      <if test="gardenTotal != null" >
+        garden_total = #{gardenTotal,jdbcType=REAL},
+      </if>
+      <if test="gardenType != null" >
+        garden_type = #{gardenType,jdbcType=VARCHAR},
+      </if>
+      <if test="gardenClay != null" >
+        garden_clay = #{gardenClay,jdbcType=VARCHAR},
+      </if>
+      <if test="gardenDesc != null" >
+        garden_desc = #{gardenDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="terraceExist != null" >
+        terrace_exist = #{terraceExist,jdbcType=CHAR},
+      </if>
+      <if test="terraceLength != null" >
+        terrace_length = #{terraceLength,jdbcType=REAL},
+      </if>
+      <if test="terraceWidth != null" >
+        terrace_width = #{terraceWidth,jdbcType=REAL},
+      </if>
+      <if test="terraceHeight != null" >
+        terrace_height = #{terraceHeight,jdbcType=REAL},
+      </if>
+      <if test="terraceTotal != null" >
+        terrace_total = #{terraceTotal,jdbcType=REAL},
+      </if>
+      <if test="terraceDesc != null" >
+        terrace_desc = #{terraceDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="checkInTime != null" >
+        check_in_time = #{checkInTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isTop != null" >
+        is_top = #{isTop,jdbcType=VARCHAR},
+      </if>
+      <if test="isShow != null" >
+        is_show = #{isShow,jdbcType=VARCHAR},
+      </if>
+      <if test="isAvailable != null" >
+        is_available = #{isAvailable,jdbcType=VARCHAR},
+      </if>
+      <if test="isPromotions != null" >
+        is_promotions = #{isPromotions,jdbcType=VARCHAR},
+      </if>
+      <if test="rentStatus != null" >
+        rent_status = #{rentStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="roomStatus != null" >
+        room_status = #{roomStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="custSex != null" >
+        cust_sex = #{custSex,jdbcType=VARCHAR},
+      </if>
+      <if test="custCode != null" >
+        cust_code = #{custCode,jdbcType=VARCHAR},
+      </if>
+      <if test="flag != null" >
+        flag = #{flag,jdbcType=VARCHAR},
+      </if>
+    </set>
+  	where sys_house_id = #{sysHouseId,jdbcType=INTEGER}
+  </update>
+  <select id="countRoom" parameterType="string" resultType="java.lang.Integer" >
+	select count(*) from t_room
+	where room_type !='KITCHEN' and sys_house_id = #{sysHouseId,jdbcType=INTEGER} and rent_status = 'dzz' and flag='Y'
+  </select>
+  <select id="countOutRoom" parameterType="string" resultType="java.lang.Integer" >
+	select count(*) from t_room
+	where room_type !='KITCHEN' and sys_house_id = #{sysHouseId,jdbcType=INTEGER} and rent_status = 'ycz' and flag='Y'
+  </select>
+  <select id="countRoomNum" parameterType="string" resultType="java.lang.Integer" >
+	select count(*) from t_room
+	where room_type !='KITCHEN' and sys_house_id = #{sysHouseId,jdbcType=INTEGER} and flag='Y'
+  </select>
+  <select id="countReservationRoomNum" parameterType="string" resultType="java.lang.Integer" >
+	select count(*) from t_room
+	where room_type !='KITCHEN' and sys_house_id = #{sysHouseId,jdbcType=INTEGER} and rent_status = 'yxd' and flag='Y'
+  </select>
+  <update id="saloon" parameterType="cn.ziroom.contract.domain.Room">
+  	update t_room set saloon_length=null,saloon_width=null,saloon_height=null,saloon_material=null,saloon_master=null,saloon_position=null,saloon_desc=null where sys_room_id=#{sysRoomId,jdbcType=INTEGER} and sys_house_id = #{sysHouseId,jdbcType=INTEGER}
+  </update>
+  <update id="kitchen" parameterType="cn.ziroom.contract.domain.Room">
+  	update t_room set kitchen_length=null,kitchen_width=null,kitchen_height=null,kitchen_stove=null,kitchen_gastype=null,kitchen_desc=null where sys_room_id=#{sysRoomId,jdbcType=INTEGER} and sys_house_id = #{sysHouseId,jdbcType=INTEGER}
+  </update>
+  <update id="toilet" parameterType="cn.ziroom.contract.domain.Room">
+  	update t_room set toliet_exist=null,toilet_length=null,toilet_width=null,toilet_height=null,toilet_window=null,toilet_curtain=null,toilet_fan=null,toilet_desc=null where sys_room_id=#{sysRoomId,jdbcType=INTEGER} and sys_house_id = #{sysHouseId,jdbcType=INTEGER}
+  </update>
+  <update id="balcony" parameterType="cn.ziroom.contract.domain.Room">
+  	update t_room set balcony_exist=null,balcony_length=null,balcony_width=null,balcony_height=null,balcony_type=null,balcony_desc=null where sys_room_id=#{sysRoomId,jdbcType=INTEGER} and sys_house_id = #{sysHouseId,jdbcType=INTEGER}
+  </update>
+  <update id="garder" parameterType="cn.ziroom.contract.domain.Room">
+  	update t_room set garder_exist=null,garden_length=null,garden_width=null,garden_height=null,garden_type=null,garden_clay=null,garden_desc=null where sys_room_id=#{sysRoomId,jdbcType=INTEGER} and sys_house_id = #{sysHouseId,jdbcType=INTEGER}
+  </update>
+  <update id="terrace" parameterType="cn.ziroom.contract.domain.Room">
+  	update t_room set terrace_exist=null,terrace_length=null,terrace_width=null,terrace_height=null,terrace_desc=null where sys_room_id=#{sysRoomId,jdbcType=INTEGER} and sys_house_id = #{sysHouseId,jdbcType=INTEGER}
+  </update>
+</mapper>

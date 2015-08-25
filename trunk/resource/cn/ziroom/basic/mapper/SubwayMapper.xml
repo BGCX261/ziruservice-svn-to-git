@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.ziroom.basic.mapper.SubwayMapper" >
+	<select id="selectByCode" resultType="string" parameterType="cn.ziroom.basic.domain.Subway"  >
+	  select subway_code from t_subway where subway_code = #{subwayCode,jdbcType=INTEGER}
+	</select>
+	<select id="selectByCodeReturnName" resultType="string" parameterType="java.lang.String" >
+	  select subway_name from t_subway where subway_code = #{subwayCode,jdbcType=INTEGER}
+	</select>
+	<select id="selectAll" resultType="cn.ziroom.basic.domain.Subway">
+	  select subway_code as subwayCode,subway_name as subwayName from t_subway where flag='Y'
+	</select>
+	<insert id="insert" parameterType="cn.ziroom.basic.domain.Subway" useGeneratedKeys="true" keyProperty="subwayId" >
+	  insert into t_subway
+	  <trim prefix="(" suffix=")" suffixOverrides="," >
+	    <if test="cityCode != null" >
+	      city_code,
+	    </if>
+	    <if test="subwayName != null" >
+	      subway_name,
+	    </if>
+	    <if test="subwayCode != null" >
+	      subway_code,
+	    </if>
+	    <if test="subwayDesc != null" >
+	      subway_desc,
+	    </if>
+	  </trim>
+	  <trim prefix="values (" suffix=")" suffixOverrides="," >
+	    <if test="cityCode != null" >
+	      #{cityCode,jdbcType=VARCHAR},
+	    </if>
+	    <if test="subwayName != null" >
+	      #{subwayName,jdbcType=VARCHAR},
+	    </if>
+	    <if test="subwayCode != null" >
+	      #{subwayCode,jdbcType=VARCHAR},
+	    </if>
+	    <if test="subwayDesc != null" >
+	      #{subwayDesc,jdbcType=VARCHAR},
+	    </if>
+	  </trim>
+	</insert>
+	<update id="update" parameterType="cn.ziroom.basic.domain.Subway" >
+		update t_subway
+		<set>
+		  <if test="cityCode != null" >
+		    city_code = #{cityCode,jdbcType=VARCHAR},
+		  </if>
+		  <if test="subwayName != null" >
+		    subway_name = #{subwayName,jdbcType=VARCHAR},
+		  </if>
+		  <if test="subwayDesc != null" >
+		    subway_desc = #{subwayDesc,jdbcType=VARCHAR},
+		  </if>
+		  <if test="flag != null" >
+		    flag = #{flag,jdbcType=VARCHAR},
+		</if>
+		</set>
+		where subway_code = #{subwayCode,jdbcType=VARCHAR}
+	</update>
+</mapper>

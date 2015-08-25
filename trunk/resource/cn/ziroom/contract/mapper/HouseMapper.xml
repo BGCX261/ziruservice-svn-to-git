@@ -1,0 +1,676 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.ziroom.contract.mapper.HouseMapper" >
+  <resultMap id="House" type="cn.ziroom.contract.domain.House" >
+    <id column="house_id" property="houseId" jdbcType="INTEGER" />
+    <result column="sys_contract_id" property="sysContractId" jdbcType="INTEGER" />
+    <result column="sys_house_id" property="sysHouseId" jdbcType="INTEGER" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="house_code" property="houseCode" jdbcType="VARCHAR" />
+    <result column="dict_house_code" property="dictHouseCode" jdbcType="VARCHAR" />
+    <result column="province" property="province" jdbcType="VARCHAR" />
+    <result column="city" property="city" jdbcType="VARCHAR" />
+    <result column="cycle" property="cycle" jdbcType="VARCHAR" />
+    <result column="cycle_face" property="cycleFace" jdbcType="VARCHAR" />
+    <result column="counties" property="counties" jdbcType="VARCHAR" />
+    <result column="shopping" property="shopping" jdbcType="VARCHAR" />
+    <result column="subway_stations" property="subwayStations" jdbcType="VARCHAR" />
+    <result column="subway_line" property="subwayLine" jdbcType="VARCHAR" />
+    <result column="projectcode" property="projectcode" jdbcType="VARCHAR" />
+    <result column="building" property="building" jdbcType="VARCHAR" />
+    <result column="unit" property="unit" jdbcType="VARCHAR" />
+    <result column="floor" property="floor" jdbcType="VARCHAR" />
+    <result column="total_floor" property="totalFloor" jdbcType="VARCHAR" />
+    <result column="house_number" property="houseNumber" jdbcType="VARCHAR" />
+    <result column="build_type" property="buildType" jdbcType="VARCHAR" />
+    <result column="original_build_type" property="originalBuildType" jdbcType="VARCHAR" />
+    <result column="house_face" property="houseFace" jdbcType="VARCHAR" />
+    <result column="house_area" property="houseArea" jdbcType="VARCHAR" />
+    <result column="heating" property="heating" jdbcType="VARCHAR" />
+    <result column="decorate_living_num" property="decorateLivingNum" jdbcType="INTEGER" />
+    <result column="decorate_bedroom_num" property="decorateBedroomNum" jdbcType="INTEGER" />
+    <result column="decorate_kitchen_num" property="decorateKitchenNum" jdbcType="INTEGER" />
+    <result column="decorate_bathroom_num" property="decorateBathroomNum" jdbcType="INTEGER" />
+    <result column="decorate_balcony" property="decorateBalcony" jdbcType="INTEGER" />
+    <result column="decorate_garden" property="decorateGarden" jdbcType="INTEGER" />
+    <result column="decorate_gazebo" property="decorateGazebo" jdbcType="INTEGER" />
+    <result column="payment" property="payment" jdbcType="DECIMAL" />
+    <result column="rent_num" property="rentNum" jdbcType="INTEGER" />
+    <result column="house_evaluate" property="houseEvaluate" jdbcType="VARCHAR" />
+    <result column="environment_evaluate" property="environmentEvaluate" jdbcType="VARCHAR" />
+    <result column="rent_type" property="rentType" jdbcType="VARCHAR" />
+    <result column="assistant_code" property="assistantCode" jdbcType="INTEGER" />
+    <result column="agent_phone" property="agentPhone" jdbcType="VARCHAR" />
+    <result column="agent_name" property="agentName" jdbcType="VARCHAR" />
+    <result column="steward_code" property="stewardCode" jdbcType="VARCHAR" />
+    <result column="steward_name" property="stewardName" jdbcType="VARCHAR" />
+    <result column="steward_phone" property="stewardPhone" jdbcType="VARCHAR" />
+    <result column="leader_code" property="leaderCode" jdbcType="VARCHAR" />
+    <result column="broadband" property="broadband" jdbcType="VARCHAR" />
+    <result column="ladder" property="ladder" jdbcType="INTEGER" />
+    <result column="household" property="household" jdbcType="INTEGER" />
+    <result column="house_product" property="houseProduct" jdbcType="VARCHAR" />
+    <result column="customer_pay" property="customerPay" jdbcType="VARCHAR" />
+    <result column="check_in_time" property="checkInTime" jdbcType="TIMESTAMP" />
+    <result column="flv_url" property="flvUrl" jdbcType="VARCHAR" />
+    <result column="is_top" property="isTop" jdbcType="VARCHAR" />
+    <result column="is_available" property="isAvailable" jdbcType="VARCHAR" />
+    <result column="is_promotions" property="isPromotions" jdbcType="VARCHAR" />
+    <result column="is_show" property="isShow" jdbcType="VARCHAR" />
+    <result column="house_status" property="houseStatus" jdbcType="VARCHAR" />
+    <result column="rent_status" property="rentStatus" jdbcType="VARCHAR" />
+    <result column="flag" property="flag" jdbcType="VARCHAR" />
+    <result column="characteristics" property="characteristics" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="column" >
+    house_id, title, house_code, dict_house_code, province, city, cycle, cycle_face, 
+    counties, shopping, subway_stations, subway_line, projectcode, building, unit, floor, 
+    total_floor, house_number, build_type, original_build_type, house_face, house_area, 
+    heating, decorate_living_num, decorate_bedroom_num, decorate_kitchen_num, decorate_bathroom_num, 
+    decorate_balcony, decorate_garden, decorate_gazebo, payment, rent_num, house_evaluate, 
+    environment_evaluate, rent_type, assistant_code, agent_phone, agent_name, steward_code, 
+    steward_name, steward_phone, leader_code, broadband, ladder, household, house_product, 
+    customer_pay, check_in_time, flv_url, is_top, is_available, is_promotions, is_show, 
+    house_status, rent_status, flag
+  </sql>
+  <sql id="blob_column" >
+    characteristics
+  </sql>
+  <select id="selectList" resultMap="House" parameterType="cn.ziroom.contract.domain.House" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="column" />
+    from t_house
+  </select>
+  <select id="selectById" resultMap="House" parameterType="java.lang.Integer" >
+    select 
+    <include refid="column" />
+    ,
+    <include refid="blob_column" />
+    from t_house
+    where house_id = #{houseId,jdbcType=INTEGER}
+  </select>
+  <select id="selectByCode" resultMap="House" parameterType="int" >
+    select 
+    <include refid="column" />
+    from t_house
+    where sys_house_id = #{sysHouseId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteById" parameterType="java.lang.Integer" >
+    delete from t_house
+    where sys_house_id = #{houseId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.ziroom.contract.domain.House" useGeneratedKeys="true" keyProperty="houseId" >
+    insert into t_house
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="houseId != null" >
+        house_id,
+      </if>
+      <if test="sysHouseId != null" >
+        sys_house_id,
+      </if>
+      <if test="sysContractId != null" >
+        sys_contract_id,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="houseCode != null" >
+        house_code,
+      </if>
+      <if test="dictHouseCode != null" >
+        dict_house_code,
+      </if>
+      <if test="province != null" >
+        province,
+      </if>
+      <if test="city != null" >
+        city,
+      </if>
+      <if test="cycle != null" >
+        cycle,
+      </if>
+      <if test="cycleFace != null" >
+        cycle_face,
+      </if>
+      <if test="counties != null" >
+        counties,
+      </if>
+      <if test="shopping != null" >
+        shopping,
+      </if>
+      <if test="subwayStations != null" >
+        subway_stations,
+      </if>
+      <if test="subwayLine != null" >
+        subway_line,
+      </if>
+      <if test="projectcode != null" >
+        projectcode,
+      </if>
+      <if test="building != null" >
+        building,
+      </if>
+      <if test="unit != null" >
+        unit,
+      </if>
+      <if test="floor != null" >
+        floor,
+      </if>
+      <if test="totalFloor != null" >
+        total_floor,
+      </if>
+      <if test="houseNumber != null" >
+        house_number,
+      </if>
+      <if test="buildType != null" >
+        build_type,
+      </if>
+      <if test="originalBuildType != null" >
+        original_build_type,
+      </if>
+      <if test="houseFace != null" >
+        house_face,
+      </if>
+      <if test="houseArea != null" >
+        house_area,
+      </if>
+      <if test="heating != null" >
+        heating,
+      </if>
+      <if test="decorateLivingNum != null" >
+        decorate_living_num,
+      </if>
+      <if test="decorateBedroomNum != null" >
+        decorate_bedroom_num,
+      </if>
+      <if test="decorateKitchenNum != null" >
+        decorate_kitchen_num,
+      </if>
+      <if test="decorateBathroomNum != null" >
+        decorate_bathroom_num,
+      </if>
+      <if test="decorateBalcony != null" >
+        decorate_balcony,
+      </if>
+      <if test="decorateGarden != null" >
+        decorate_garden,
+      </if>
+      <if test="decorateGazebo != null" >
+        decorate_gazebo,
+      </if>
+      <if test="payment != null" >
+        payment,
+      </if>
+      <if test="rentNum != null" >
+        rent_num,
+      </if>
+      <if test="houseEvaluate != null" >
+        house_evaluate,
+      </if>
+      <if test="environmentEvaluate != null" >
+        environment_evaluate,
+      </if>
+      <if test="rentType != null" >
+        rent_type,
+      </if>
+      <if test="assistantCode != null" >
+        assistant_code,
+      </if>
+      <if test="agentPhone != null" >
+        agent_phone,
+      </if>
+      <if test="agentName != null" >
+        agent_name,
+      </if>
+      <if test="stewardCode != null" >
+        steward_code,
+      </if>
+      <if test="stewardName != null" >
+        steward_name,
+      </if>
+      <if test="stewardPhone != null" >
+        steward_phone,
+      </if>
+      <if test="leaderCode != null" >
+        leader_code,
+      </if>
+      <if test="broadband != null" >
+        broadband,
+      </if>
+      <if test="ladder != null" >
+        ladder,
+      </if>
+      <if test="household != null" >
+        household,
+      </if>
+      <if test="houseProduct != null" >
+        house_product,
+      </if>
+      <if test="customerPay != null" >
+        customer_pay,
+      </if>
+      <if test="checkInTime != null" >
+        check_in_time,
+      </if>
+      <if test="flvUrl != null" >
+        flv_url,
+      </if>
+      <if test="isTop != null" >
+        is_top,
+      </if>
+      <if test="isAvailable != null" >
+        is_available,
+      </if>
+      <if test="isPromotions != null" >
+        is_promotions,
+      </if>
+      <if test="isShow != null" >
+        is_show,
+      </if>
+      <if test="houseStatus != null" >
+        house_status,
+      </if>
+      <if test="rentStatus != null" >
+        rent_status,
+      </if>
+      <if test="flag != null" >
+        flag,
+      </if>
+      <if test="characteristics != null" >
+        characteristics,
+      </if>
+      <if test="walktime != null" >
+        walktime,
+      </if>
+      <if test="busstation != null" >
+        busstation,
+      </if>
+      <if test="buscode != null" >
+        buscode,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="houseId != null" >
+        #{houseId,jdbcType=INTEGER},
+      </if>
+      <if test="sysHouseId != null" >
+        #{sysHouseId,jdbcType=INTEGER},
+      </if>
+      <if test="sysContractId != null" >
+        #{sysContractId,jdbcType=INTEGER},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="houseCode != null" >
+        #{houseCode,jdbcType=VARCHAR},
+      </if>
+      <if test="dictHouseCode != null" >
+        #{dictHouseCode,jdbcType=VARCHAR},
+      </if>
+      <if test="province != null" >
+        #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null" >
+        #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="cycle != null" >
+        #{cycle,jdbcType=VARCHAR},
+      </if>
+      <if test="cycleFace != null" >
+        #{cycleFace,jdbcType=VARCHAR},
+      </if>
+      <if test="counties != null" >
+        #{counties,jdbcType=VARCHAR},
+      </if>
+      <if test="shopping != null" >
+        #{shopping,jdbcType=VARCHAR},
+      </if>
+      <if test="subwayStations != null" >
+        #{subwayStations,jdbcType=VARCHAR},
+      </if>
+      <if test="subwayLine != null" >
+        #{subwayLine,jdbcType=VARCHAR},
+      </if>
+      <if test="projectcode != null" >
+        #{projectcode,jdbcType=VARCHAR},
+      </if>
+      <if test="building != null" >
+        #{building,jdbcType=VARCHAR},
+      </if>
+      <if test="unit != null" >
+        #{unit,jdbcType=VARCHAR},
+      </if>
+      <if test="floor != null" >
+        #{floor,jdbcType=VARCHAR},
+      </if>
+      <if test="totalFloor != null" >
+        #{totalFloor,jdbcType=VARCHAR},
+      </if>
+      <if test="houseNumber != null" >
+        #{houseNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="buildType != null" >
+        #{buildType,jdbcType=VARCHAR},
+      </if>
+      <if test="originalBuildType != null" >
+        #{originalBuildType,jdbcType=VARCHAR},
+      </if>
+      <if test="houseFace != null" >
+        #{houseFace,jdbcType=VARCHAR},
+      </if>
+      <if test="houseArea != null" >
+        #{houseArea,jdbcType=VARCHAR},
+      </if>
+      <if test="heating != null" >
+        #{heating,jdbcType=VARCHAR},
+      </if>
+      <if test="decorateLivingNum != null" >
+        #{decorateLivingNum,jdbcType=INTEGER},
+      </if>
+      <if test="decorateBedroomNum != null" >
+        #{decorateBedroomNum,jdbcType=INTEGER},
+      </if>
+      <if test="decorateKitchenNum != null" >
+        #{decorateKitchenNum,jdbcType=INTEGER},
+      </if>
+      <if test="decorateBathroomNum != null" >
+        #{decorateBathroomNum,jdbcType=INTEGER},
+      </if>
+      <if test="decorateBalcony != null" >
+        #{decorateBalcony,jdbcType=INTEGER},
+      </if>
+      <if test="decorateGarden != null" >
+        #{decorateGarden,jdbcType=INTEGER},
+      </if>
+      <if test="decorateGazebo != null" >
+        #{decorateGazebo,jdbcType=INTEGER},
+      </if>
+      <if test="payment != null" >
+        #{payment,jdbcType=DECIMAL},
+      </if>
+      <if test="rentNum != null" >
+        #{rentNum,jdbcType=INTEGER},
+      </if>
+      <if test="houseEvaluate != null" >
+        #{houseEvaluate,jdbcType=VARCHAR},
+      </if>
+      <if test="environmentEvaluate != null" >
+        #{environmentEvaluate,jdbcType=VARCHAR},
+      </if>
+      <if test="rentType != null" >
+        #{rentType,jdbcType=VARCHAR},
+      </if>
+      <if test="assistantCode != null" >
+        #{assistantCode,jdbcType=INTEGER},
+      </if>
+      <if test="agentPhone != null" >
+        #{agentPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="agentName != null" >
+        #{agentName,jdbcType=VARCHAR},
+      </if>
+      <if test="stewardCode != null" >
+        #{stewardCode,jdbcType=VARCHAR},
+      </if>
+      <if test="stewardName != null" >
+        #{stewardName,jdbcType=VARCHAR},
+      </if>
+      <if test="stewardPhone != null" >
+        #{stewardPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="leaderCode != null" >
+        #{leaderCode,jdbcType=VARCHAR},
+      </if>
+      <if test="broadband != null" >
+        #{broadband,jdbcType=VARCHAR},
+      </if>
+      <if test="ladder != null" >
+        #{ladder,jdbcType=INTEGER},
+      </if>
+      <if test="household != null" >
+        #{household,jdbcType=INTEGER},
+      </if>
+      <if test="houseProduct != null" >
+        #{houseProduct,jdbcType=VARCHAR},
+      </if>
+      <if test="customerPay != null" >
+        #{customerPay,jdbcType=VARCHAR},
+      </if>
+      <if test="checkInTime != null" >
+        #{checkInTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="flvUrl != null" >
+        #{flvUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="isTop != null" >
+        #{isTop,jdbcType=VARCHAR},
+      </if>
+      <if test="isAvailable != null" >
+        #{isAvailable,jdbcType=VARCHAR},
+      </if>
+      <if test="isPromotions != null" >
+        #{isPromotions,jdbcType=VARCHAR},
+      </if>
+      <if test="isShow != null" >
+        #{isShow,jdbcType=VARCHAR},
+      </if>
+      <if test="houseStatus != null" >
+        #{houseStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="rentStatus != null" >
+        #{rentStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="flag != null" >
+        #{flag,jdbcType=VARCHAR},
+      </if>
+      <if test="characteristics != null" >
+        #{characteristics,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="walktime != null" >
+        #{walktime,jdbcType=INTEGER},
+      </if>
+      <if test="busstation != null" >
+        #{busstation,jdbcType=VARCHAR},
+      </if>
+      <if test="buscode != null" >
+        #{buscode,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="count" parameterType="cn.ziroom.contract.domain.House" resultType="java.lang.Integer" >
+    select count(*) from t_house
+  </select>
+  <update id="update" parameterType="cn.ziroom.contract.domain.House" >
+    update t_house
+    <set >
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="sysHouseId != null" >
+        sys_house_id = #{sysHouseId,jdbcType=INTEGER},
+      </if>
+      <if test="sysContractId != null" >
+        sys_contract_id = #{sysContractId,jdbcType=INTEGER},
+      </if>
+      <if test="houseCode != null" >
+        house_code = #{houseCode,jdbcType=VARCHAR},
+      </if>
+      <if test="dictHouseCode != null" >
+        dict_house_code = #{dictHouseCode,jdbcType=VARCHAR},
+      </if>
+      <if test="province != null" >
+        province = #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null" >
+        city = #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="cycle != null" >
+        cycle = #{cycle,jdbcType=VARCHAR},
+      </if>
+      <if test="cycleFace != null" >
+        cycle_face = #{cycleFace,jdbcType=VARCHAR},
+      </if>
+      <if test="counties != null" >
+        counties = #{counties,jdbcType=VARCHAR},
+      </if>
+      <if test="shopping != null" >
+        shopping = #{shopping,jdbcType=VARCHAR},
+      </if>
+      <if test="subwayStations != null" >
+        subway_stations = #{subwayStations,jdbcType=VARCHAR},
+      </if>
+      <if test="subwayLine != null" >
+        subway_line = #{subwayLine,jdbcType=VARCHAR},
+      </if>
+      <if test="projectcode != null" >
+        projectcode = #{projectcode,jdbcType=VARCHAR},
+      </if>
+      <if test="building != null" >
+        building = #{building,jdbcType=VARCHAR},
+      </if>
+      <if test="unit != null" >
+        unit = #{unit,jdbcType=VARCHAR},
+      </if>
+      <if test="floor != null" >
+        floor = #{floor,jdbcType=VARCHAR},
+      </if>
+      <if test="totalFloor != null" >
+        total_floor = #{totalFloor,jdbcType=VARCHAR},
+      </if>
+      <if test="houseNumber != null" >
+        house_number = #{houseNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="buildType != null" >
+        build_type = #{buildType,jdbcType=VARCHAR},
+      </if>
+      <if test="originalBuildType != null" >
+        original_build_type = #{originalBuildType,jdbcType=VARCHAR},
+      </if>
+      <if test="houseFace != null" >
+        house_face = #{houseFace,jdbcType=VARCHAR},
+      </if>
+      <if test="houseArea != null" >
+        house_area = #{houseArea,jdbcType=VARCHAR},
+      </if>
+      <if test="heating != null" >
+        heating = #{heating,jdbcType=VARCHAR},
+      </if>
+      <if test="decorateLivingNum != null" >
+        decorate_living_num = #{decorateLivingNum,jdbcType=INTEGER},
+      </if>
+      <if test="decorateBedroomNum != null" >
+        decorate_bedroom_num = #{decorateBedroomNum,jdbcType=INTEGER},
+      </if>
+      <if test="decorateKitchenNum != null" >
+        decorate_kitchen_num = #{decorateKitchenNum,jdbcType=INTEGER},
+      </if>
+      <if test="decorateBathroomNum != null" >
+        decorate_bathroom_num = #{decorateBathroomNum,jdbcType=INTEGER},
+      </if>
+      <if test="decorateBalcony != null" >
+        decorate_balcony = #{decorateBalcony,jdbcType=INTEGER},
+      </if>
+      <if test="decorateGarden != null" >
+        decorate_garden = #{decorateGarden,jdbcType=INTEGER},
+      </if>
+      <if test="decorateGazebo != null" >
+        decorate_gazebo = #{decorateGazebo,jdbcType=INTEGER},
+      </if>
+      <if test="payment != null" >
+        payment = #{payment,jdbcType=DECIMAL},
+      </if>
+      <if test="rentNum != null" >
+        rent_num = #{rentNum,jdbcType=INTEGER},
+      </if>
+      <if test="houseEvaluate != null" >
+        house_evaluate = #{houseEvaluate,jdbcType=VARCHAR},
+      </if>
+      <if test="environmentEvaluate != null" >
+        environment_evaluate = #{environmentEvaluate,jdbcType=VARCHAR},
+      </if>
+      <if test="rentType != null" >
+        rent_type = #{rentType,jdbcType=VARCHAR},
+      </if>
+      <if test="assistantCode != null" >
+        assistant_code = #{assistantCode,jdbcType=INTEGER},
+      </if>
+      <if test="agentPhone != null" >
+        agent_phone = #{agentPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="agentName != null" >
+        agent_name = #{agentName,jdbcType=VARCHAR},
+      </if>
+      <if test="stewardCode != null" >
+        steward_code = #{stewardCode,jdbcType=VARCHAR},
+      </if>
+      <if test="stewardName != null" >
+        steward_name = #{stewardName,jdbcType=VARCHAR},
+      </if>
+      <if test="stewardPhone != null" >
+        steward_phone = #{stewardPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="leaderCode != null" >
+        leader_code = #{leaderCode,jdbcType=VARCHAR},
+      </if>
+      <if test="broadband != null" >
+        broadband = #{broadband,jdbcType=VARCHAR},
+      </if>
+      <if test="ladder != null" >
+        ladder = #{ladder,jdbcType=INTEGER},
+      </if>
+      <if test="household != null" >
+        household = #{household,jdbcType=INTEGER},
+      </if>
+      <if test="houseProduct != null" >
+        house_product = #{houseProduct,jdbcType=VARCHAR},
+      </if>
+      <if test="customerPay != null" >
+        customer_pay = #{customerPay,jdbcType=VARCHAR},
+      </if>
+      <if test="checkInTime != null" >
+        check_in_time = #{checkInTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="flvUrl != null" >
+        flv_url = #{flvUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="isTop != null" >
+        is_top = #{isTop,jdbcType=VARCHAR},
+      </if>
+      <if test="isAvailable != null" >
+        is_available = #{isAvailable,jdbcType=VARCHAR},
+      </if>
+      <if test="isPromotions != null" >
+        is_promotions = #{isPromotions,jdbcType=VARCHAR},
+      </if>
+      <if test="isShow != null" >
+        is_show = #{isShow,jdbcType=VARCHAR},
+      </if>
+      <if test="houseStatus != null" >
+        house_status = #{houseStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="rentStatus != null" >
+        rent_status = #{rentStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="flag != null" >
+        flag = #{flag,jdbcType=VARCHAR},
+      </if>
+      <if test="characteristics != null" >
+        characteristics = #{characteristics,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="walktime != null" >
+        walktime=#{walktime,jdbcType=INTEGER},
+      </if>
+      <if test="busstation != null" >
+        busstation=#{busstation,jdbcType=VARCHAR},
+      </if>
+      <if test="buscode != null" >
+        buscode=#{buscode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where sys_house_id = #{sysHouseId,jdbcType=INTEGER}
+  </update>
+</mapper>

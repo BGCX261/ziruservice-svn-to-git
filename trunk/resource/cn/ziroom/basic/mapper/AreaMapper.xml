@@ -1,0 +1,351 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.ziroom.basic.mapper.AreaMapper">
+	<resultMap id="Area" type="cn.ziroom.basic.domain.Area" >
+		<result column="projectintroduce" property="projectintroduce" jdbcType="LONGVARCHAR" />
+		<result column="roadtransit" property="roadtransit" jdbcType="LONGVARCHAR" />
+		<result column="park" property="park" jdbcType="LONGVARCHAR" />
+		<result column="hospital" property="hospital" jdbcType="LONGVARCHAR" />
+		<result column="supermarket" property="supermarket" jdbcType="LONGVARCHAR" />
+		<result column="market" property="market" jdbcType="LONGVARCHAR" />
+		<result column="entertainment" property="entertainment" jdbcType="LONGVARCHAR" />
+		<result column="subwaystation" property="subwaystation" jdbcType="LONGVARCHAR" />
+		<result column="station_name" property="stationName" jdbcType="LONGVARCHAR" />
+	</resultMap>
+	<sql id="column" >
+	    housingprojectid, projectcode, projectname, projectalias, projectpinyin, projectjianpin, 
+	    fullviewpath, longitude, latitude, propcompanyname, propcompany_type, propcompany_phone, 
+	    propertyfee, ugplotnum, devcompanyname, completionyear, totalarea, floorarearatio, 
+	    greenarearatio, subway_info, subwaydistance, subway_name, bus_code, address, business_name, cycle_name
+	</sql>
+	<sql id="blob_column" >
+	  projectintroduce, roadtransit, park, hospital, supermarket, market, entertainment, subwaystation, station_name
+	</sql>
+	<select id="selectByCode" resultMap="Area" parameterType="java.lang.String" >
+		select  
+		<include refid="blob_column"/>
+		from t_area where projectcode = #{projectcode,jdbcType=VARCHAR}
+	</select>
+	<select id="selectByCodeReturnName" resultType="string" parameterType="java.lang.String" >
+		select projectname from t_area where projectcode = #{projectcode,jdbcType=VARCHAR}
+	</select>
+	<insert id="insert" parameterType="cn.ziroom.basic.domain.Area" useGeneratedKeys="true" keyProperty="housingprojectid" >
+	  insert into t_area
+	  <trim prefix="(" suffix=")" suffixOverrides="," >
+	    <if test="projectcode != null" >
+	      projectcode,
+	    </if>
+	    <if test="projectname != null" >
+	      projectname,
+	    </if>
+	    <if test="projectalias != null" >
+	      projectalias,
+	    </if>
+	    <if test="projectpinyin != null" >
+	      projectpinyin,
+	    </if>
+	    <if test="projectjianpin != null" >
+	      projectjianpin,
+	    </if>
+	    <if test="fullviewpath != null" >
+	      fullviewpath,
+	    </if>
+	    <if test="longitude != null" >
+	      longitude,
+	    </if>
+	    <if test="latitude != null" >
+	      latitude,
+	    </if>
+	    <if test="propcompanyname != null" >
+	      propcompanyname,
+	    </if>
+	    <if test="propcompanyType != null" >
+	      propcompany_type,
+	    </if>
+	    <if test="propcompanyPhone != null" >
+	      propcompany_phone,
+	    </if>
+	    <if test="propertyfee != null" >
+	      propertyfee,
+	    </if>
+	    <if test="ugplotnum != null" >
+	      ugplotnum,
+	    </if>
+	    <if test="devcompanyname != null" >
+	      devcompanyname,
+	    </if>
+	    <if test="completionyear != null" >
+	      completionyear,
+	    </if>
+	    <if test="totalarea != null" >
+	      totalarea,
+	    </if>
+	    <if test="floorarearatio != null" >
+	      floorarearatio,
+	    </if>
+	    <if test="greenarearatio != null" >
+	      greenarearatio,
+	    </if>
+	    <if test="subwayInfo != null" >
+	      subway_info,
+	    </if>
+	    <if test="subwaydistance != null" >
+	      subwaydistance,
+	    </if>
+	    <if test="subwayName != null" >
+	      subway_name,
+	    </if>
+	    <if test="busCode != null" >
+	      bus_code,
+	    </if>
+	    <if test="address != null" >
+	      address,
+	    </if>
+	    <if test="projectintroduce != null" >
+	      projectintroduce,
+	    </if>
+	    <if test="roadtransit != null" >
+	      roadtransit,
+	    </if>
+	    <if test="park != null" >
+	      park,
+	    </if>
+	    <if test="hospital != null" >
+	      hospital,
+	    </if>
+	    <if test="supermarket != null" >
+	      supermarket,
+	    </if>
+	    <if test="market != null" >
+	      market,
+	    </if>
+	    <if test="entertainment != null" >
+	      entertainment,
+	    </if>
+	    <if test="subwaystation != null" >
+	      subwaystation,
+	    </if>
+	    <if test="stationName != null" >
+	      station_name,
+	    </if>
+	    <if test="businessName != null" >
+	      business_name,
+	    </if>
+	    <if test="cycleName != null" >
+	      cycle_name,
+	    </if>
+	  </trim>
+	  <trim prefix="values (" suffix=")" suffixOverrides="," >
+	    <if test="projectcode != null" >
+	      #{projectcode,jdbcType=VARCHAR},
+	    </if>
+	    <if test="projectname != null" >
+	      #{projectname,jdbcType=VARCHAR},
+	    </if>
+	    <if test="projectalias != null" >
+	      #{projectalias,jdbcType=VARCHAR},
+	    </if>
+	    <if test="projectpinyin != null" >
+	      #{projectpinyin,jdbcType=VARCHAR},
+	    </if>
+	    <if test="projectjianpin != null" >
+	      #{projectjianpin,jdbcType=VARCHAR},
+	    </if>
+	    <if test="fullviewpath != null" >
+	      #{fullviewpath,jdbcType=VARCHAR},
+	    </if>
+	    <if test="longitude != null" >
+	      #{longitude,jdbcType=REAL},
+	    </if>
+	    <if test="latitude != null" >
+	      #{latitude,jdbcType=REAL},
+	    </if>
+	    <if test="propcompanyname != null" >
+	      #{propcompanyname,jdbcType=VARCHAR},
+	    </if>
+	    <if test="propcompanyType != null" >
+	      #{propcompanyType,jdbcType=VARCHAR},
+	    </if>
+	    <if test="propcompanyPhone != null" >
+	      #{propcompanyPhone,jdbcType=VARCHAR},
+	    </if>
+	    <if test="propertyfee != null" >
+	      #{propertyfee,jdbcType=DECIMAL},
+	    </if>
+	    <if test="ugplotnum != null" >
+	      #{ugplotnum,jdbcType=DECIMAL},
+	    </if>
+	    <if test="devcompanyname != null" >
+	      #{devcompanyname,jdbcType=VARCHAR},
+	    </if>
+	    <if test="completionyear != null" >
+	      #{completionyear,jdbcType=VARCHAR},
+	    </if>
+	    <if test="totalarea != null" >
+	      #{totalarea,jdbcType=INTEGER},
+	    </if>
+	    <if test="floorarearatio != null" >
+	      #{floorarearatio,jdbcType=DECIMAL},
+	    </if>
+	    <if test="greenarearatio != null" >
+	      #{greenarearatio,jdbcType=DECIMAL},
+	    </if>
+	    <if test="subwayInfo != null" >
+	      #{subwayInfo,jdbcType=VARCHAR},
+	    </if>
+	    <if test="subwaydistance != null" >
+	      #{subwaydistance,jdbcType=VARCHAR},
+	    </if>
+	    <if test="subwayName != null" >
+	      #{subwayName,jdbcType=VARCHAR},
+	    </if>
+	    <if test="busCode != null" >
+	      #{busCode,jdbcType=VARCHAR},
+	    </if>
+	    <if test="address != null" >
+	      #{address,jdbcType=VARCHAR},
+	    </if>
+	    <if test="projectintroduce != null" >
+	      #{projectintroduce,jdbcType=LONGVARCHAR},
+	    </if>
+	    <if test="roadtransit != null" >
+	      #{roadtransit,jdbcType=LONGVARCHAR},
+	    </if>
+	    <if test="park != null" >
+	      #{park,jdbcType=LONGVARCHAR},
+	    </if>
+	    <if test="hospital != null" >
+	      #{hospital,jdbcType=LONGVARCHAR},
+	    </if>
+	    <if test="supermarket != null" >
+	      #{supermarket,jdbcType=LONGVARCHAR},
+	    </if>
+	    <if test="market != null" >
+	      #{market,jdbcType=LONGVARCHAR},
+	    </if>
+	    <if test="entertainment != null" >
+	      #{entertainment,jdbcType=LONGVARCHAR},
+	    </if>
+	    <if test="subwaystation != null" >
+	      #{subwaystation,jdbcType=LONGVARCHAR},
+	    </if>
+	    <if test="stationName != null" >
+	      #{stationName,jdbcType=LONGVARCHAR},
+	    </if>
+	    <if test="businessName != null" >
+	      #{businessName,jdbcType=LONGVARCHAR},
+	    </if>
+	    <if test="cycleName != null" >
+	      #{cycleName,jdbcType=LONGVARCHAR},
+	    </if>
+	  </trim>
+	</insert>
+	<update id="update" parameterType="cn.ziroom.basic.domain.Area" >
+		update t_area
+		<set>
+		  <if test="projectname != null" >
+		    projectname = #{projectname,jdbcType=VARCHAR},
+		  </if>
+		  <if test="projectalias != null" >
+		    projectalias = #{projectalias,jdbcType=VARCHAR},
+		  </if>
+		  <if test="projectpinyin != null" >
+		    projectpinyin = #{projectpinyin,jdbcType=VARCHAR},
+		  </if>
+		  <if test="projectjianpin != null" >
+		    projectjianpin = #{projectjianpin,jdbcType=VARCHAR},
+		  </if>
+		  <if test="fullviewpath != null" >
+		    fullviewpath = #{fullviewpath,jdbcType=VARCHAR},
+		  </if>
+		  <if test="longitude != null" >
+		    longitude = #{longitude,jdbcType=REAL},
+		  </if>
+		  <if test="latitude != null" >
+		    latitude = #{latitude,jdbcType=REAL},
+		  </if>
+		  <if test="propcompanyname != null" >
+		    propcompanyname = #{propcompanyname,jdbcType=VARCHAR},
+		  </if>
+		  <if test="propcompanyType != null" >
+		    propcompany_type = #{propcompanyType,jdbcType=VARCHAR},
+		  </if>
+		  <if test="propcompanyPhone != null" >
+		    propcompany_phone = #{propcompanyPhone,jdbcType=VARCHAR},
+		  </if>
+		  <if test="propertyfee != null" >
+		    propertyfee = #{propertyfee,jdbcType=DECIMAL},
+		  </if>
+		  <if test="ugplotnum != null" >
+		    ugplotnum = #{ugplotnum,jdbcType=DECIMAL},
+		  </if>
+		  <if test="devcompanyname != null" >
+		    devcompanyname = #{devcompanyname,jdbcType=VARCHAR},
+		  </if>
+		  <if test="completionyear != null" >
+		    completionyear = #{completionyear,jdbcType=VARCHAR},
+		  </if>
+		  <if test="totalarea != null" >
+		    totalarea = #{totalarea,jdbcType=INTEGER},
+		  </if>
+		  <if test="floorarearatio != null" >
+		    floorarearatio = #{floorarearatio,jdbcType=DECIMAL},
+		  </if>
+		  <if test="greenarearatio != null" >
+		    greenarearatio = #{greenarearatio,jdbcType=DECIMAL},
+		  </if>
+		  <if test="subwayInfo != null" >
+		    subway_info = #{subwayInfo,jdbcType=VARCHAR},
+		  </if>
+		  <if test="subwaydistance != null" >
+		    subwaydistance = #{subwaydistance,jdbcType=VARCHAR},
+		  </if>
+		  <if test="subwayName != null" >
+		    subway_name = #{subwayName,jdbcType=VARCHAR},
+		  </if>
+		  <if test="busCode != null" >
+		    bus_code = #{busCode,jdbcType=VARCHAR},
+		  </if>
+		  <if test="address != null" >
+		    address = #{address,jdbcType=VARCHAR},
+		  </if>
+		  <if test="projectintroduce != null" >
+		    projectintroduce = #{projectintroduce,jdbcType=LONGVARCHAR},
+		  </if>
+		  <if test="roadtransit != null" >
+		    roadtransit = #{roadtransit,jdbcType=LONGVARCHAR},
+		  </if>
+		  <if test="park != null" >
+		    park = #{park,jdbcType=LONGVARCHAR},
+		  </if>
+		  <if test="hospital != null" >
+		    hospital = #{hospital,jdbcType=LONGVARCHAR},
+		  </if>
+		  <if test="supermarket != null" >
+		    supermarket = #{supermarket,jdbcType=LONGVARCHAR},
+		  </if>
+		  <if test="market != null" >
+		    market = #{market,jdbcType=LONGVARCHAR},
+		  </if>
+		  <if test="entertainment != null" >
+		    entertainment = #{entertainment,jdbcType=LONGVARCHAR},
+		  </if>
+		  <if test="subwaystation != null" >
+		    subwaystation = #{subwaystation,jdbcType=LONGVARCHAR},
+		  </if>
+		  <if test="stationName != null" >
+		    station_name = #{stationName,jdbcType=LONGVARCHAR},
+		  </if>
+		  <if test="businessName != null" >
+		    business_name = #{businessName,jdbcType=LONGVARCHAR},
+		  </if>
+		  <if test="cycleName != null" >
+		    cycle_name = #{cycleName,jdbcType=LONGVARCHAR},
+		  </if>
+		  <if test="flag != null" >
+		    flag = #{flag,jdbcType=VARCHAR},
+		  </if>
+		</set>
+		where projectcode = #{projectcode,jdbcType=VARCHAR}
+	</update>
+</mapper>

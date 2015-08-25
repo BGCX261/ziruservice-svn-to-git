@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.ziroom.system.mapper.RoleMapper" >
+  <resultMap id="Role" type="cn.ziroom.system.domain.Role" >
+    <id column="role_id" property="roleId" jdbcType="INTEGER" />
+    <result column="role_name" property="roleName" jdbcType="VARCHAR" />
+    <result column="fun_code" property="funCode" jdbcType="VARCHAR" />
+     <result column="role_desc" property="roleDesc" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="column" >
+    role_id, role_name, fun_code,role_desc
+  </sql>
+  <select id="selectList" resultMap="Role" parameterType="cn.ziroom.system.domain.Role" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="column" />
+    from t_role limit #{currentPage},#{line}
+  </select>
+  <select id="selectById" resultMap="Role" parameterType="java.lang.Integer" >
+    select 
+    <include refid="column" />
+    from t_role
+    where role_id = #{roleId,jdbcType=INTEGER}
+  </select>
+  <select id="selectByName" resultMap="Role" parameterType="string" >
+    select 
+    <include refid="column" />
+    from t_role
+    where role_name = #{roleName,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteById" parameterType="java.lang.Integer" >
+    delete from t_role
+    where role_id = #{roleId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.ziroom.system.domain.Role" useGeneratedKeys="true" keyProperty="roleId" >
+    insert into t_role
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="roleId != null" >
+        role_id,
+      </if>
+      <if test="roleName != null" >
+        role_name,
+      </if>
+      <if test="funCode != null" >
+        fun_code,
+      </if>
+      <if test="roleDesc != null" >
+        role_desc,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="roleId != null" >
+        #{roleId,jdbcType=INTEGER},
+      </if>
+      <if test="roleName != null" >
+        #{roleName,jdbcType=VARCHAR},
+      </if>
+      <if test="funCode != null" >
+        #{funCode,jdbcType=VARCHAR},
+      </if>
+      <if test="roleDesc != null" >
+        #{roleDesc,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="count" parameterType="cn.ziroom.system.domain.Role" resultType="java.lang.Integer" >
+    select count(*) from t_role
+  </select>
+  <update id="update" parameterType="cn.ziroom.system.domain.Role" >
+    update t_role
+    <set >
+      <if test="roleName != null" >
+        role_name = #{roleName,jdbcType=VARCHAR},
+      </if>
+      <if test="funCode != null" >
+        fun_code = #{funCode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where role_id = #{roleId,jdbcType=INTEGER}
+  </update>
+</mapper>

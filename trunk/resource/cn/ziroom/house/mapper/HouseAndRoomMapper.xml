@@ -1,0 +1,502 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.ziroom.house.mapper.HouseAndRoomMapper">
+	<resultMap id="House" type="cn.ziroom.house.domain.House" >
+		<result column="sys_house_id" property="sysHouseId" jdbcType="INTEGER" />
+		<result column="title" property="title" jdbcType="VARCHAR" />
+		<result column="house_code" property="houseCode" jdbcType="VARCHAR" />
+		<result column="city" property="city" jdbcType="VARCHAR" />
+		<result column="counties" property="counties" jdbcType="VARCHAR" />
+		<result column="shopping" property="shopping" jdbcType="VARCHAR" />
+		<result column="projectname" property="areaName" jdbcType="VARCHAR" />
+		<result column="payment" property="payment" jdbcType="DECIMAL" />
+		<result column="house_status" property="houseStatus" jdbcType="VARCHAR" />
+		<result column="steward_name" property="stewardName" jdbcType="VARCHAR" />
+		<result column="rent_status" property="rentStatus" jdbcType="VARCHAR" />
+		<result column="is_show" property="isShow" jdbcType="VARCHAR" />
+		<result column="is_top" property="isTop" jdbcType="VARCHAR" />
+		<result column="is_promotions" property="isPromotions" jdbcType="VARCHAR" />
+	</resultMap>
+	<resultMap id="Room" type="cn.ziroom.house.domain.Room">
+		<result column="room_id" property="roomId" jdbcType="INTEGER" />
+		<result column="sys_house_id" property="sysHouseId" jdbcType="INTEGER" />
+		<result column="sys_room_id" property="sysRoomId" jdbcType="INTEGER" />
+		<result column="room_code" property="roomCode" jdbcType="VARCHAR" />
+		<result column="house_code" property="houseCode" jdbcType="VARCHAR" />
+		<result column="room_name" property="roomName" jdbcType="VARCHAR" />
+		<result column="room_type" property="roomType" jdbcType="VARCHAR" />
+		<result column="rent_fee" property="rentFee" jdbcType="DECIMAL" />
+		<result column="is_top" property="isTop" jdbcType="VARCHAR" />
+		<result column="is_show" property="isShow" jdbcType="VARCHAR" />
+		<result column="is_promotions" property="isPromotions" jdbcType="VARCHAR" />
+		<result column="rent_status" property="rentStatus" jdbcType="VARCHAR" />
+	</resultMap>
+	<!-- 房屋查询 -->
+	<sql id="house_column_short">
+		title,sys_house_id,house_code,city,counties,shopping,projectname,payment,house_status,steward_name,rent_status,is_show,is_top,is_promotions,build_type as buildType, house_area as houseArea, heating, rent_num as rentNum, house_product as houseProduct
+	</sql>
+	<sql id="house_column">
+		title,sys_house_id,house_code,city,counties,shopping,payment,house_status,steward_name,rent_status,is_show,is_top,is_promotions
+	</sql>
+	<select id="searchHouseList" parameterType="cn.ziroom.house.domain.House" resultMap="House">
+		select <include refid="house_column_short"/> from t_house left join t_area on t_house.projectcode=t_area.projectcode
+		,t_user 
+		where t_house.flag!='N' and t_user.staffid=t_house.steward_code
+		
+		<if test='departName != null and departName != ""'>
+			and t_user.dept_path like '%${departName}%'
+		</if>
+		<if test='staffid != null and staffid != ""'>
+			and t_user.staffid=#{staffid, jdbcType=INTEGER}
+		</if>
+		
+		<if test='houseCode != null and houseCode != ""'>
+			and house_code = #{houseCode, jdbcType=VARCHAR}
+		</if>
+		<if test='dep1 != null and dep1 != ""'>
+			and t_user.dept_path like '%${dep1}%'
+		</if>
+		<if test='dep2 != null and dep2 != ""'>
+			and t_user.dept_path like '%${dep2}%'
+		</if>
+		<if test='r1 != null and r1 != ""'>
+			and t_user.dept_path like '%${r1}%'
+		</if>
+		<if test='r2 != null and r2 != ""'>
+			and t_user.staffid = #{r2, jdbcType=VARCHAR}
+		</if>
+		<!-- 查询 -->
+		<if test='isShow != null and isShow != ""'>
+			and (t_house.is_show=#{isShow, jdbcType=VARCHAR} or (select count(room_id) from t_room where t_room.sys_house_id=t_house.sys_house_id and t_room.flag!='N' and t_room.is_show=#{isShow, jdbcType=VARCHAR}) > 0)
+		</if>
+		<if test='isTop != null and isTop != ""'>
+			and (t_house.is_top=#{isTop, jdbcType=VARCHAR} or (select count(room_id) from t_room where t_room.sys_house_id=t_house.sys_house_id and t_room.flag!='N' and t_room.is_top=#{isTop, jdbcType=VARCHAR}) > 0)
+		</if>
+		<if test='isPromotions != null and isPromotions != ""'>
+			and (t_house.is_promotions=#{isPromotions, jdbcType=VARCHAR} or (select count(room_id) from t_room where t_room.sys_house_id=t_house.sys_house_id and t_room.flag!='N' and t_room.is_promotions=#{isPromotions, jdbcType=VARCHAR}) > 0)
+		</if>
+		<if test='rentType != null and rentType != ""'>
+			and t_house.rent_type=#{rentType, jdbcType=VARCHAR}
+		</if>
+		
+		limit #{currentPage},#{line}
+	</select>
+	<select id="countHouse" parameterType="cn.ziroom.house.domain.House" resultType="int">
+		select count(house_id) from t_house,t_user 
+		where t_house.flag!='N' and t_user.staffid=t_house.steward_code
+		
+		<if test='departName != null and departName != ""'>
+			and t_user.dept_path like '%${departName}%'
+		</if>
+		<if test='staffid != null and staffid != ""'>
+			and t_user.staffid=#{staffid, jdbcType=INTEGER}
+		</if>
+		
+		<if test='houseCode != null and houseCode != ""'>
+			and house_code = #{houseCode, jdbcType=VARCHAR}
+		</if>
+		<if test='dep1 != null and dep1 != ""'>
+			and t_user.dept_path like '%${dep1}%'
+		</if>
+		<if test='dep2 != null and dep2 != ""'>
+			and t_user.dept_path like '%${dep2}%'
+		</if>
+		<if test='r1 != null and r1 != ""'>
+			and t_user.dept_path like '%${r1}%'
+		</if>
+		<if test='r2 != null and r2 != ""'>
+			and t_user.staffid = #{r2, jdbcType=VARCHAR}
+		</if>
+		<if test='isShow != null and isShow != ""'>
+			and (t_house.is_show=#{isShow, jdbcType=VARCHAR} or (select count(room_id) from t_room where t_room.sys_house_id=t_house.sys_house_id and t_room.flag!='N' and t_room.is_show=#{isShow, jdbcType=VARCHAR}) > 0)
+		</if>
+		<if test='isTop != null and isTop != ""'>
+			and (t_house.is_top=#{isTop, jdbcType=VARCHAR} or (select count(room_id) from t_room where t_room.sys_house_id=t_house.sys_house_id and t_room.flag!='N' and t_room.is_top=#{isTop, jdbcType=VARCHAR}) > 0)
+		</if>
+		<if test='isPromotions != null and isPromotions != ""'>
+			and (t_house.is_promotions=#{isPromotions, jdbcType=VARCHAR} or (select count(room_id) from t_room where t_room.sys_house_id=t_house.sys_house_id and t_room.flag!='N' and t_room.is_promotions=#{isPromotions, jdbcType=VARCHAR}) > 0)
+		</if>
+		<if test='rentType != null and rentType != ""'>
+			and t_house.rent_type=#{rentType, jdbcType=VARCHAR}
+		</if>
+	</select>
+	<!-- 房源编号查找房屋 -->
+	<select id="selectHouseByCode" resultMap="House" parameterType="int">
+		select <include refid="house_column"/> from t_house where sys_house_id = #{sysHouseId, jdbcType=INTEGER}
+	</select>
+	<update id="updateHouse" parameterType="cn.ziroom.house.domain.House">
+		update t_house
+		<set>
+		  <if test="houseEvaluate != null" >
+		    house_evaluate = #{houseEvaluate,jdbcType=VARCHAR},
+		  </if>
+		  <if test="environmentEvaluate != null" >
+		    environment_evaluate = #{environmentEvaluate,jdbcType=VARCHAR},
+		  </if>
+		  <if test="characteristics != null" >
+		    characteristics = #{characteristics,jdbcType=LONGVARCHAR},
+		  </if>
+		  <if test="flvUrl != null" >
+		    flv_url = #{flvUrl,jdbcType=VARCHAR},
+		  </if>
+		  <if test="isTop != null" >
+		    is_top = #{isTop,jdbcType=VARCHAR},
+		  </if>
+		  <if test="isAvailable != null" >
+		    is_available = #{isAvailable,jdbcType=VARCHAR},
+		  </if>
+		  <if test="isPromotions != null" >
+		    is_promotions = #{isPromotions,jdbcType=VARCHAR},
+		  </if>
+		  <if test="isShow != null" >
+		    is_show = #{isShow,jdbcType=VARCHAR},
+		  </if>
+		  <if test="ckd != null" >
+		     check_in_time = #{checkInTime,jdbcType=TIMESTAMP},
+		  </if>
+		</set>
+		where sys_house_id = #{sysHouseId, jdbcType=INTEGER}
+	</update>
+	<!-- 房间查询 -->
+	<sql id="room_column_short">
+		room_id,room_code,sys_house_id,sys_room_id,house_code,room_name,room_type,rent_fee,is_top,is_show,rent_status,is_promotions
+	</sql>
+	<select id="searchRoomByHouseCode" resultMap="Room" parameterType="int">
+		select <include refid="room_column_short"/> from t_room
+		where room_type != 'KITCHEN' and sys_house_id = #{sysHouseId, jdbcType=INTEGER} and flag!='N'
+	</select>
+	<select id="selectRoomByCode" parameterType="int" resultMap="Room">
+		select <include refid="room_column_short"/> from t_room
+		where room_type != 'KITCHEN' and sys_room_id=#{sysRoomId, jdbcType=INTEGER} and flag!='N'
+	</select>
+	<update id="updateRoomByHouseCode" parameterType="cn.ziroom.house.domain.Room">
+		update t_room 
+		<set>
+		  <if test="isTop != null" >
+		    is_top = #{isTop,jdbcType=VARCHAR},
+		  </if>
+		  <if test="isPromotions != null" >
+		    is_promotions = #{isPromotions,jdbcType=VARCHAR},
+		  </if>
+		  <if test="isShow != null" >
+		    is_show = #{isShow,jdbcType=VARCHAR},
+		  </if>
+		  <if test="ckd != null" >
+		     check_in_time = #{checkInTime,jdbcType=TIMESTAMP},
+		  </if>
+		</set>
+		where sys_house_id = #{sysHouseId, jdbcType=INTEGER} and flag!='N' and room_type != 'KITCHEN'
+		<if test='isShow != null and isShow=="Y"'>
+			and (rent_status='dzz' or rent_status='zxpzz' or rent_status='ytz') 
+		</if>
+	</update>
+	<update id="updateRoom" parameterType="cn.ziroom.house.domain.Room">
+		update t_room
+		<set>
+	      <if test="roomComment != null" >
+	        room_comment = #{roomComment,jdbcType=VARCHAR},
+	      </if>
+	      <if test="saloonDesc != null" >
+	        saloon_desc = #{saloonDesc,jdbcType=VARCHAR},
+	      </if>
+	      <if test="kitchenDesc != null" >
+	        kitchen_desc = #{kitchenDesc,jdbcType=VARCHAR},
+	      </if>
+	      <if test="toiletDesc != null" >
+	        toilet_desc = #{toiletDesc,jdbcType=VARCHAR},
+	      </if>
+	      <if test="balconyDesc != null" >
+	        balcony_desc = #{balconyDesc,jdbcType=VARCHAR},
+	      </if>
+	      <if test="gardenDesc != null" >
+	        garden_desc = #{gardenDesc,jdbcType=VARCHAR},
+	      </if>
+	      <if test="terraceDesc != null" >
+	        terrace_desc = #{terraceDesc,jdbcType=VARCHAR},
+	      </if>
+	      <if test="checkInTime != null" >
+	        check_in_time = #{checkInTime,jdbcType=TIMESTAMP},
+	      </if>
+	      <if test="isTop != null" >
+	        is_top = #{isTop,jdbcType=VARCHAR},
+	      </if>
+	      <if test="isShow != null" >
+	        is_show = #{isShow,jdbcType=VARCHAR},
+	      </if>
+	      <if test="isAvailable != null" >
+	        is_available = #{isAvailable,jdbcType=VARCHAR},
+	      </if>
+	      <if test="isPromotions != null" >
+	        is_promotions = #{isPromotions,jdbcType=VARCHAR},
+	      </if>
+	      <if test="ckd != null" >
+		     check_in_time = #{checkInTime,jdbcType=TIMESTAMP},
+		  </if>
+    	</set>
+    	where sys_room_id=#{sysRoomId, jdbcType=INTEGER}
+	</update>
+	<!-- 房屋发布数量 -->
+	<select id="countPubRoom" parameterType="cn.ziroom.house.domain.Room" resultType="int">
+		select count(room_id) from t_room where flag!='N' and room_type != 'KITCHEN' and is_show=#{isShow,jdbcType=VARCHAR} and sys_house_id = #{sysHouseId, jdbcType=INTEGER}
+	</select>
+	<!-- 房屋总房间数量 -->
+	<select id="countRoom" parameterType="int" resultType="int">
+		select count(room_id) from t_room where flag!='N' and room_type != 'KITCHEN' and sys_house_id = #{sysHouseId, jdbcType=INTEGER}
+	</select>
+	<!-- 查询房屋的推荐数量 -->
+	<select id="countTopRoomNum" parameterType="int" resultType="int">
+		select count(room_id) from t_room where flag!='N' and room_type != 'KITCHEN' and is_top='Y' and sys_house_id = #{sysHouseId, jdbcType=INTEGER}
+	</select>
+	<!-- 查询房屋的优先展示数量 -->
+	<select id="countPromotionsRoomNum" parameterType="int" resultType="int">
+		select count(room_id) from t_room where flag!='N' and room_type != 'KITCHEN' and is_promotions='Y' and sys_house_id = #{sysHouseId, jdbcType=INTEGER}
+	</select>
+	<!-- 房屋详情 -->
+	<resultMap id="HouseDetial" type="cn.ziroom.house.domain.House" >
+		<id column="house_id" property="houseId" jdbcType="INTEGER" />
+		<result column="sys_house_id" property="sysHouseId" jdbcType="INTEGER" />
+		<result column="title" property="title" jdbcType="VARCHAR" />
+		<result column="house_code" property="houseCode" jdbcType="VARCHAR" />
+		<result column="dict_house_code" property="dictHouseCode" jdbcType="VARCHAR" />
+		<result column="province" property="province" jdbcType="VARCHAR" />
+		<result column="city" property="city" jdbcType="VARCHAR" />
+		<result column="cycle" property="cycle" jdbcType="VARCHAR" />
+		<result column="cycle_face" property="cycleFace" jdbcType="VARCHAR" />
+		<result column="counties" property="counties" jdbcType="VARCHAR" />
+		<result column="shopping" property="shopping" jdbcType="VARCHAR" />
+		<result column="subway_stations" property="subwayStations" jdbcType="VARCHAR" />
+		<result column="subway_line" property="subwayLine" jdbcType="VARCHAR" />
+		<result column="projectcode" property="projectcode" jdbcType="VARCHAR" />
+		<result column="building" property="building" jdbcType="VARCHAR" />
+		<result column="unit" property="unit" jdbcType="VARCHAR" />
+		<result column="floor" property="floor" jdbcType="VARCHAR" />
+		<result column="total_floor" property="totalFloor" jdbcType="VARCHAR" />
+		<result column="house_number" property="houseNumber" jdbcType="VARCHAR" />
+		<result column="build_type" property="buildType" jdbcType="VARCHAR" />
+		<result column="original_build_type" property="originalBuildType" jdbcType="VARCHAR" />
+		<result column="house_face" property="houseFace" jdbcType="VARCHAR" />
+		<result column="house_area" property="houseArea" jdbcType="VARCHAR" />
+		<result column="heating" property="heating" jdbcType="VARCHAR" />
+		<result column="decorate_living_num" property="decorateLivingNum" jdbcType="INTEGER" />
+		<result column="decorate_bedroom_num" property="decorateBedroomNum" jdbcType="INTEGER" />
+		<result column="decorate_kitchen_num" property="decorateKitchenNum" jdbcType="INTEGER" />
+		<result column="decorate_bathroom_num" property="decorateBathroomNum" jdbcType="INTEGER" />
+		<result column="decorate_balcony" property="decorateBalcony" jdbcType="INTEGER" />
+		<result column="decorate_garden" property="decorateGarden" jdbcType="INTEGER" />
+		<result column="decorate_gazebo" property="decorateGazebo" jdbcType="INTEGER" />
+		<result column="payment" property="payment" jdbcType="DECIMAL" />
+		<result column="rent_num" property="rentNum" jdbcType="INTEGER" />
+		<result column="house_evaluate" property="houseEvaluate" jdbcType="VARCHAR" />
+		<result column="environment_evaluate" property="environmentEvaluate" jdbcType="VARCHAR" />
+		<result column="rent_type" property="rentType" jdbcType="VARCHAR" />
+		<result column="assistant_code" property="assistantCode" jdbcType="INTEGER" />
+		<result column="agent_phone" property="agentPhone" jdbcType="VARCHAR" />
+		<result column="agent_name" property="agentName" jdbcType="VARCHAR" />
+		<result column="steward_code" property="stewardCode" jdbcType="VARCHAR" />
+		<result column="steward_name" property="stewardName" jdbcType="VARCHAR" />
+		<result column="steward_phone" property="stewardPhone" jdbcType="VARCHAR" />
+		<result column="leader_code" property="leaderCode" jdbcType="VARCHAR" />
+		<result column="broadband" property="broadband" jdbcType="VARCHAR" />
+		<result column="ladder" property="ladder" jdbcType="INTEGER" />
+		<result column="household" property="household" jdbcType="INTEGER" />
+		<result column="house_product" property="houseProduct" jdbcType="VARCHAR" />
+		<result column="customer_pay" property="customerPay" jdbcType="VARCHAR" />
+		<result column="check_in_time" property="checkInTime" jdbcType="TIMESTAMP" />
+		<result column="flv_url" property="flvUrl" jdbcType="VARCHAR" />
+		<result column="is_top" property="isTop" jdbcType="VARCHAR" />
+		<result column="is_available" property="isAvailable" jdbcType="VARCHAR" />
+		<result column="is_promotions" property="isPromotions" jdbcType="VARCHAR" />
+		<result column="is_show" property="isShow" jdbcType="VARCHAR" />
+		<result column="house_status" property="houseStatus" jdbcType="VARCHAR" />
+		<result column="rent_status" property="rentStatus" jdbcType="VARCHAR" />
+		<result column="flag" property="flag" jdbcType="VARCHAR" />
+		<result column="characteristics" property="characteristics" jdbcType="LONGVARCHAR" />
+		<collection property="roomList" column="sys_house_id" ofType="cn.ziroom.house.domain.Room" select="selectRoom" javaType="ArrayList" />
+	</resultMap>
+	<resultMap id="RoomDetial" type="cn.ziroom.house.domain.Room" >
+		<id column="room_id" property="roomId" jdbcType="INTEGER" />
+		<result column="sys_house_id" property="sysHouseId" jdbcType="INTEGER" />
+		<result column="sys_room_id" property="sysRoomId" jdbcType="INTEGER" />
+		<result column="room_code" property="roomCode" jdbcType="VARCHAR" />
+		<result column="room_name" property="roomName" jdbcType="VARCHAR" />
+		<result column="house_code" property="houseCode" jdbcType="VARCHAR" />
+		<result column="room_type" property="roomType" jdbcType="VARCHAR" />
+		<result column="room_area" property="roomArea" jdbcType="REAL" />
+		<result column="room_position" property="roomPosition" jdbcType="VARCHAR" />
+		<result column="rent_fee" property="rentFee" jdbcType="DECIMAL" />
+		<result column="pay_way" property="payWay" jdbcType="VARCHAR" />
+		<result column="noise_effect" property="noiseEffect" jdbcType="VARCHAR" />
+		<result column="agent_phone" property="agentPhone" jdbcType="VARCHAR" />
+		<result column="agent_name" property="agentName" jdbcType="VARCHAR" />
+		<result column="steward_name" property="stewardName" jdbcType="VARCHAR" />
+		<result column="steward_phone" property="stewardPhone" jdbcType="VARCHAR" />
+		<result column="room_length" property="roomLength" jdbcType="VARCHAR" />
+		<result column="room_width" property="roomWidth" jdbcType="VARCHAR" />
+		<result column="room_height" property="roomHeight" jdbcType="VARCHAR" />
+		<result column="room_comment" property="roomComment" jdbcType="VARCHAR" />
+		<result column="saloon_length" property="saloonLength" jdbcType="REAL" />
+		<result column="saloon_width" property="saloonWidth" jdbcType="REAL" />
+		<result column="saloon_height" property="saloonHeight" jdbcType="REAL" />
+		<result column="saloon_total" property="saloonTotal" jdbcType="REAL" />
+		<result column="saloon_material" property="saloonMaterial" jdbcType="VARCHAR" />
+		<result column="saloon_master" property="saloonMaster" jdbcType="VARCHAR" />
+		<result column="saloon_position" property="saloonPosition" jdbcType="VARCHAR" />
+		<result column="saloon_desc" property="saloonDesc" jdbcType="VARCHAR" />
+		<result column="kitchen_length" property="kitchenLength" jdbcType="REAL" />
+		<result column="kitchen_width" property="kitchenWidth" jdbcType="REAL" />
+		<result column="kitchen_height" property="kitchenHeight" jdbcType="REAL" />
+		<result column="kitchen_total" property="kitchenTotal" jdbcType="REAL" />
+		<result column="kitchen_stove" property="kitchenStove" jdbcType="VARCHAR" />
+		<result column="kitchen_gastype" property="kitchenGastype" jdbcType="VARCHAR" />
+		<result column="kitchen_desc" property="kitchenDesc" jdbcType="VARCHAR" />
+		<result column="toliet_exist" property="tolietExist" jdbcType="CHAR" />
+		<result column="toilet_length" property="toiletLength" jdbcType="REAL" />
+		<result column="toilet_width" property="toiletWidth" jdbcType="REAL" />
+		<result column="toilet_height" property="toiletHeight" jdbcType="REAL" />
+		<result column="toilet_total" property="toiletTotal" jdbcType="REAL" />
+		<result column="toilet_window" property="toiletWindow" jdbcType="VARCHAR" />
+		<result column="toilet_curtain" property="toiletCurtain" jdbcType="VARCHAR" />
+		<result column="toilet_fan" property="toiletFan" jdbcType="VARCHAR" />
+		<result column="toilet_desc" property="toiletDesc" jdbcType="VARCHAR" />
+		<result column="balcony_exist" property="balconyExist" jdbcType="CHAR" />
+		<result column="balcony_length" property="balconyLength" jdbcType="REAL" />
+		<result column="balcony_width" property="balconyWidth" jdbcType="REAL" />
+		<result column="balcony_height" property="balconyHeight" jdbcType="REAL" />
+		<result column="balcony_total" property="balconyTotal" jdbcType="REAL" />
+		<result column="balcony_type" property="balconyType" jdbcType="VARCHAR" />
+		<result column="balcony_desc" property="balconyDesc" jdbcType="VARCHAR" />
+		<result column="garder_exist" property="garderExist" jdbcType="CHAR" />
+		<result column="garden_length" property="gardenLength" jdbcType="REAL" />
+		<result column="garden_width" property="gardenWidth" jdbcType="REAL" />
+		<result column="garden_height" property="gardenHeight" jdbcType="REAL" />
+		<result column="garden_total" property="gardenTotal" jdbcType="REAL" />
+		<result column="garden_type" property="gardenType" jdbcType="VARCHAR" />
+		<result column="garden_clay" property="gardenClay" jdbcType="VARCHAR" />
+		<result column="garden_desc" property="gardenDesc" jdbcType="VARCHAR" />
+		<result column="terrace_exist" property="terraceExist" jdbcType="CHAR" />
+		<result column="terrace_length" property="terraceLength" jdbcType="REAL" />
+		<result column="terrace_width" property="terraceWidth" jdbcType="REAL" />
+		<result column="terrace_height" property="terraceHeight" jdbcType="REAL" />
+		<result column="terrace_total" property="terraceTotal" jdbcType="REAL" />
+		<result column="terrace_desc" property="terraceDesc" jdbcType="VARCHAR" />
+		<result column="check_in_time" property="checkInTime" jdbcType="TIMESTAMP" />
+		<result column="is_top" property="isTop" jdbcType="VARCHAR" />
+		<result column="is_show" property="isShow" jdbcType="VARCHAR" />
+		<result column="is_available" property="isAvailable" jdbcType="VARCHAR" />
+		<result column="is_promotions" property="isPromotions" jdbcType="VARCHAR" />
+		<result column="rent_status" property="rentStatus" jdbcType="VARCHAR" />
+		<result column="room_status" property="roomStatus" jdbcType="VARCHAR" />
+		<result column="cust_sex" property="custSex" jdbcType="VARCHAR" />
+		<result column="cust_code" property="custCode" jdbcType="VARCHAR" />
+		<result column="flag" property="flag" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="room_detail_column" >
+		room_id,sys_house_id,sys_room_id, room_code, room_name, house_code, room_type, room_area, room_position, rent_fee, 
+		pay_way, noise_effect, agent_phone, agent_name, steward_name, steward_phone, room_length, 
+		room_width, room_height, room_comment, saloon_length, saloon_width, saloon_height, 
+		saloon_total, saloon_material, saloon_master, saloon_position, saloon_desc, kitchen_length, 
+		kitchen_width, kitchen_height, kitchen_total, kitchen_stove, kitchen_gastype, kitchen_desc, 
+		toliet_exist, toilet_length, toilet_width, toilet_height, toilet_total, toilet_window, 
+		toilet_curtain, toilet_fan, toilet_desc, balcony_exist, balcony_length, balcony_width, 
+		balcony_height, balcony_total, balcony_type, balcony_desc, garder_exist, garden_length, 
+		garden_width, garden_height, garden_total, garden_type, garden_clay, garden_desc, 
+		terrace_exist, terrace_length, terrace_width, terrace_height, terrace_total, terrace_desc, 
+		check_in_time, is_top, is_show, is_available, is_promotions, rent_status, room_status, 
+		cust_sex, cust_code, flag
+	</sql>
+	<sql id="house_detail_column" >
+		house_id,sys_house_id, title, house_code, dict_house_code, province, city, cycle, cycle_face, 
+		counties, shopping, subway_stations, subway_line, projectcode, building, unit, floor, 
+		total_floor, house_number, build_type, original_build_type, house_face, house_area, 
+		heating, decorate_living_num, decorate_bedroom_num, decorate_kitchen_num, decorate_bathroom_num, 
+		decorate_balcony, decorate_garden, decorate_gazebo, payment, rent_num, house_evaluate, 
+		environment_evaluate, rent_type, assistant_code, agent_phone, agent_name, steward_code, 
+		steward_name, steward_phone, leader_code, broadband, ladder, household, house_product, 
+		customer_pay, check_in_time, flv_url, is_top, is_available, is_promotions, is_show, 
+		house_status, rent_status, flag,characteristics
+	</sql>
+	<select id="selectHouse" resultMap="HouseDetial" parameterType="int" >
+		select  <include refid="house_detail_column" /> from t_house where sys_house_id = #{sysHouseId, jdbcType=INTEGER}
+	</select>
+	<select id="selectRoom" resultMap="RoomDetial" parameterType="int" >
+		select  <include refid="room_detail_column" /> from t_room where sys_house_id = #{sysHouseId, jdbcType=INTEGER}
+	</select>
+	<!-- 用户 -->
+	<resultMap id="User" type="cn.ziroom.system.domain.User">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="staffid" property="staffid" jdbcType="VARCHAR" />
+		<result column="account" property="account" jdbcType="VARCHAR" />
+		<result column="staff_pass" property="staffPass" jdbcType="VARCHAR" />
+		<result column="staff_name" property="staffName" jdbcType="VARCHAR" />
+		<result column="mobile_number" property="mobileNumber" jdbcType="VARCHAR" />
+		<result column="manager_id" property="managerId" jdbcType="VARCHAR" />
+		<result column="group_name" property="groupName" jdbcType="VARCHAR" />
+		<result column="staff_type" property="staffType" jdbcType="VARCHAR" />
+		<result column="setid_jobcode" property="setidJobcode" jdbcType="VARCHAR" />
+		<result column="staff_role" property="staffRole" jdbcType="VARCHAR" />
+		<result column="dept_code" property="deptCode" jdbcType="VARCHAR" />
+		<result column="depart_name" property="departName" jdbcType="VARCHAR" />
+		<result column="dept_path" property="deptPath" jdbcType="VARCHAR" />
+		<result column="dept_level" property="deptLevel" jdbcType="VARCHAR" />
+		<result column="status" property="status" jdbcType="VARCHAR" />
+	</resultMap>
+	<!-- 拓展部下的业务组 -->
+	<select id="selectByFirst" parameterType="cn.ziroom.system.domain.User" resultMap="User" >
+		select distinct dept_code,depart_name from t_user where dept_path like '%${deptPath}%' and dept_path like '%A18109%' and dept_level=8;
+	</select>
+	<!-- 业务组的主管 -->
+	<select id="selectBySecond" parameterType="cn.ziroom.system.domain.User" resultMap="User" >
+		select distinct staffid,staff_name from t_user where setid_jobcode='主管' and dept_path like '%A18109%';
+	</select>
+	<!-- 业务组下的管家 -->
+	<select id="selectByThird" parameterType="cn.ziroom.system.domain.User" resultMap="User" >
+		select distinct staffid,staff_name from t_user where setid_jobcode='专员' and dept_path like '%A18109%' and dept_level=8;
+	</select>
+	<!-- 管家 -->
+	<select id="selectByStaff" parameterType="cn.ziroom.system.domain.User" resultMap="User" >
+		select * from t_user where staffid=#{staffid, jdbcType=VARCHAR}
+	</select>
+	<!-- 房间优先展示数量 -->
+	<select id="countPromotions" parameterType="string" resultType="int" >
+		select count(t_room.room_id) from t_house,t_room where t_house.sys_house_id=t_room.sys_house_id and t_house.steward_code=#{code,jdbcType=VARCHAR} and t_room.is_promotions='Y'
+	</select>
+	<!-- 房间优先展示数量 -->
+	<select id="countTop" parameterType="string" resultType="int" >
+		select count(t_room.room_id) from t_house,t_room where t_house.sys_house_id=t_room.sys_house_id and t_house.leader_code=#{code,jdbcType=VARCHAR} and t_room.is_top='Y'
+	</select>
+	<!-- 根据房间信息获得房屋，房间等信息 -->
+	<select id="selectByRoomId" parameterType="int" resultMap="RoomDetial" >
+		select  <include refid="room_detail_column" /> from t_room where room_id = #{roomId, jdbcType=INTEGER}
+	</select>
+	<!-- 图片路径 -->
+	<sql id="room_pictures_detail_column" >
+		imagetype,imagepath
+	</sql>
+	<select id="selectRoomPicturesByRoomId" parameterType="int" resultType="cn.ziroom.contract.domain.RoomPictures" >
+		select  <include refid="room_pictures_detail_column" /> 
+		from t_room_pictures 
+		where sys_room_id = #{sysRoomId, jdbcType=INTEGER}
+	</select>
+	<select id="selectRoomPicturesByHouseId" parameterType="int" resultType="cn.ziroom.contract.domain.RoomPictures" >
+		select  <include refid="room_pictures_detail_column" /> 
+		from t_room_pictures 
+		where sys_house_id = #{sysHouseId, jdbcType=INTEGER}
+		and sys_room_id not in(select sys_room_id from t_room where room_type!='KITCHEN' and sys_house_id=#{sysHouseId, jdbcType=INTEGER})
+	</select>
+	<select id="selectItemByRoom" parameterType="map" resultType="java.lang.String" >
+		select item from v_config where sys_room_id=#{sysRoomId, jdbcType=INTEGER} and item_type=#{itemType, jdbcType=VARCHAR}
+	</select>
+	<select id="selectItemByPub" parameterType="map" resultType="java.lang.String" >
+		select item from v_config where sys_house_id=#{sysHouseId, jdbcType=INTEGER} and item_type=#{itemType, jdbcType=VARCHAR} and sys_room_id not in(select t_room.sys_room_id from t_room where t_room.room_type != 'KITCHEN' and t_room.sys_house_id=#{sysHouseId, jdbcType=INTEGER}) 
+	</select>
+	<select id="selectOtherRoom" parameterType="map" resultType="map" >
+		select 
+		room_code as code,
+		(select d_value from t_dict where t_room.room_position=t_dict.d_code and d_type='WINDOW_FACE') as roomposition,
+		(select d_value from t_dict where t_room.rent_status=t_dict.d_code and d_type='ROOM_STATUS') as roomstatus,
+		t_room.rent_status as rentstatus,
+		(select d_value from t_dict where t_room.cust_sex=t_dict.d_code and d_type='SEX') as sex,
+		(select professional from t_customer where t_customer.cust_code=t_room.cust_code limit 0,1) as professional
+		from t_room where t_room.room_type != 'KITCHEN' and sys_room_id!=#{sysRoomId, jdbcType=INTEGER}  and sys_house_id=#{sysHouseId, jdbcType=INTEGER}
+	</select>
+</mapper>

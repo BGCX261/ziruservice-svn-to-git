@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="cn.ziroom.basic.mapper.DictMapper">
+
+	<select id="selectByName" resultType="cn.ziroom.basic.domain.Dict" parameterType="java.lang.String" >
+	  select d_type as dType, d_code as dCode, d_value as dValue from t_dict where d_type=#{dType,jdbcType=VARCHAR} and d_code=#{dCode,jdbcType=VARCHAR} order by d_type, d_code
+	</select>
+	
+	<select id="selectByCodeReturnName" resultType="string" parameterType="string" >
+	  select d_value as dValue from t_dict where d_type='HOUSE_FACE' and d_code=#{code,jdbcType=VARCHAR} order by d_type, d_code
+	</select>
+	
+	<select id="selectByType" resultType="cn.ziroom.basic.domain.Dict">
+	  select d_type as dType, d_code as dCode, d_value as dValue from t_dict where d_type=#{dType,jdbcType=VARCHAR}  order by d_type, d_code
+	</select>
+	
+	<select id="selectAll" resultType="cn.ziroom.basic.domain.Dict">
+	  select d_type as dType, d_code as dCode, d_value as dValue from t_dict order by d_type, d_code
+	</select>
+</mapper>

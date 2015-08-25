@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.ziroom.system.mapper.FunctionMapper" >
+  <resultMap id="Function" type="cn.ziroom.system.domain.Function" >
+    <id column="function_id" property="functionId" jdbcType="INTEGER" />
+    <result column="function_name" property="functionName" jdbcType="VARCHAR" />
+    <result column="function_code" property="functionCode" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="column" >
+    function_id, function_name, function_code
+  </sql>
+  <select id="selectList" resultMap="Function" >
+    select
+    <include refid="column" />
+    from t_function where parent_id is null
+  </select>
+  <select id="selectNodeList" resultMap="Function" parameterType="int" >
+    select
+    <include refid="column" />
+    from t_function where parent_id =#{functionId,jdbcType=INTEGER}
+  </select>
+  <select id="selectById" resultMap="Function" parameterType="java.lang.Integer" >
+    select 
+    <include refid="column" />
+    from t_function
+    where function_id = #{functionId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteById" parameterType="java.lang.Integer" >
+    delete from t_function
+    where function_id = #{functionId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.ziroom.system.domain.Function" useGeneratedKeys="true" keyProperty="functionId" >
+    insert into t_function
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="functionId != null" >
+        function_id,
+      </if>
+      <if test="functionName != null" >
+        function_name,
+      </if>
+      <if test="functionCode != null" >
+        function_code,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="functionId != null" >
+        #{functionId,jdbcType=INTEGER},
+      </if>
+      <if test="functionName != null" >
+        #{functionName,jdbcType=VARCHAR},
+      </if>
+      <if test="functionCode != null" >
+        #{functionCode,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="count" parameterType="cn.ziroom.system.domain.Function" resultType="java.lang.Integer" >
+    select count(*) from t_function
+  </select>
+  <update id="update" parameterType="cn.ziroom.system.domain.Function" >
+    update t_function
+    <set >
+      <if test="functionName != null" >
+        function_name = #{functionName,jdbcType=VARCHAR},
+      </if>
+      <if test="functionCode != null" >
+        function_code = #{functionCode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where function_id = #{functionId,jdbcType=INTEGER}
+  </update>
+</mapper>

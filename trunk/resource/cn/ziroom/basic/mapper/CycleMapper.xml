@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.ziroom.basic.mapper.CycleMapper" >
+	<select id="selectByCode" resultType="string" parameterType="java.lang.String" >
+		select city_code from t_cycle
+		where cycle_code=#{cycleCode,jdbcType=VARCHAR}
+	</select>
+	<select id="selectAll" resultType="cn.ziroom.basic.domain.Cycle">
+	  select cycle_code as cycleCode,cycle_name as cycleName from t_cycle where flag='Y'
+	</select>
+	<insert id="insert" parameterType="cn.ziroom.basic.domain.Cycle" useGeneratedKeys="true" keyProperty="cycleId" >
+	  insert into t_cycle
+	  <trim prefix="(" suffix=")" suffixOverrides="," >
+	    <if test="cityCode != null" >
+	      city_code,
+	    </if>
+	    <if test="cycleName != null" >
+	      cycle_name,
+	    </if>
+	    <if test="cycleCode != null" >
+	      cycle_code,
+	    </if>
+	  </trim>
+	  <trim prefix="values (" suffix=")" suffixOverrides="," >
+	    <if test="cityCode != null" >
+	      #{cityCode,jdbcType=VARCHAR},
+	    </if>
+	    <if test="cycleName != null" >
+	      #{cycleName,jdbcType=VARCHAR},
+	    </if>
+	    <if test="cycleCode != null" >
+	      #{cycleCode,jdbcType=VARCHAR},
+	    </if>
+	  </trim>
+	</insert>
+	<update id="update" parameterType="cn.ziroom.basic.domain.Cycle">
+		update t_cycle
+		<set>
+		  <if test="cityCode != null" >
+		    city_code = #{cityCode,jdbcType=VARCHAR},
+		  </if>
+		  <if test="cycleName != null" >
+		    cycle_name = #{cycleName,jdbcType=VARCHAR},
+		  </if>
+		  <if test="flag != null" >
+		    flag = #{flag,jdbcType=VARCHAR},
+		</if>
+		</set>
+		where cycle_code = #{cycleCode,jdbcType=VARCHAR}
+	</update>
+</mapper>

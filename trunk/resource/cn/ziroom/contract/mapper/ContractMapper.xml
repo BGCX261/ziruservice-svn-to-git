@@ -1,0 +1,350 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.ziroom.contract.mapper.ContractMapper" >
+  <resultMap id="Contract" type="cn.ziroom.contract.domain.Contract" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="sys_contract_id" property="sysContractId" jdbcType="INTEGER" />
+    <result column="sys_room_id" property="sysRoomId" jdbcType="INTEGER" />
+    <result column="sys_house_id" property="sysHouseId" jdbcType="INTEGER" />
+    <result column="sys_cust_id" property="sysCustId" jdbcType="INTEGER" />
+    <result column="cust_code" property="custCode" jdbcType="VARCHAR" />
+    <result column="house_code" property="houseCode" jdbcType="VARCHAR" />
+    <result column="room_code" property="roomCode" jdbcType="VARCHAR" />
+    <result column="contract_code" property="contractCode" jdbcType="VARCHAR" />
+    <result column="security_code" property="securityCode" jdbcType="VARCHAR" />
+    <result column="cycle" property="cycle" jdbcType="VARCHAR" />
+    <result column="vacancy" property="vacancy" jdbcType="VARCHAR" />
+    <result column="sign_date" property="signDate" jdbcType="TIMESTAMP" />
+    <result column="effect_date" property="effectDate" jdbcType="TIMESTAMP" />
+    <result column="stop_date" property="stopDate" jdbcType="TIMESTAMP" />
+    <result column="price" property="price" jdbcType="DECIMAL" />
+    <result column="store_num" property="storeNum" jdbcType="VARCHAR" />
+    <result column="store_name" property="storeName" jdbcType="VARCHAR" />
+    <result column="business_name" property="businessName" jdbcType="VARCHAR" />
+    <result column="area_name" property="areaName" jdbcType="VARCHAR" />
+    <result column="store_leader_code" property="storeLeaderCode" jdbcType="VARCHAR" />
+    <result column="store_leader_name" property="storeLeaderName" jdbcType="VARCHAR" />
+    <result column="store_agent_code" property="storeAgentCode" jdbcType="VARCHAR" />
+    <result column="store_agent_name" property="storeAgentName" jdbcType="VARCHAR" />
+    <result column="agent_code" property="agentCode" jdbcType="VARCHAR" />
+    <result column="house_product" property="houseProduct" jdbcType="VARCHAR" />
+    <result column="rental" property="rental" jdbcType="VARCHAR" />
+    <result column="payment" property="payment" jdbcType="VARCHAR" />
+    <result column="contract_state" property="contractState" jdbcType="VARCHAR" />
+    <result column="contract_type" property="contractType" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="column" >
+    id, cust_code, house_code, room_code, contract_code, security_code, cycle, vacancy, 
+    sign_date, effect_date, stop_date, price, store_num, store_name, business_name, area_name, 
+    store_leader_code, store_leader_name, store_agent_code, store_agent_name, agent_code, 
+    house_product, rental, payment, contract_state, contract_type
+  </sql>
+  <select id="selectList" resultMap="Contract" parameterType="cn.ziroom.contract.domain.Contract" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="column" />
+    from t_contract
+  </select>
+  <select id="selectById" resultMap="Contract" parameterType="java.lang.Integer" >
+    select 
+    <include refid="column" />
+    from t_contract
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectByCode" resultMap="Contract" parameterType="cn.ziroom.contract.domain.Contract" >
+    select 
+    <include refid="column" />
+    from t_contract
+    where sys_contract_id = #{sysContractId,jdbcType=INTEGER} and contract_type = #{contractType,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByContractCode" resultType="string" parameterType="int" >
+    select contract_code from t_contract
+    where sys_contract_id = #{sysContractId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteById" parameterType="java.lang.Integer" >
+    delete from t_contract
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.ziroom.contract.domain.Contract" useGeneratedKeys="true" keyProperty="id" >
+    insert into t_contract
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="sysContractId != null" >
+        sys_contract_id,
+      </if>
+      <if test="sysRoomId != null" >
+        sys_room_id,
+      </if>
+      <if test="sysHouseId != null" >
+        sys_house_id,
+      </if>
+      <if test="sysCustId != null" >
+        sys_cust_id,
+      </if>
+      <if test="custCode != null" >
+        cust_code,
+      </if>
+      <if test="houseCode != null" >
+        house_code,
+      </if>
+      <if test="roomCode != null" >
+        room_code,
+      </if>
+      <if test="contractCode != null" >
+        contract_code,
+      </if>
+      <if test="securityCode != null" >
+        security_code,
+      </if>
+      <if test="cycle != null" >
+        cycle,
+      </if>
+      <if test="vacancy != null" >
+        vacancy,
+      </if>
+      <if test="signDate != null" >
+        sign_date,
+      </if>
+      <if test="effectDate != null" >
+        effect_date,
+      </if>
+      <if test="stopDate != null" >
+        stop_date,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+      <if test="storeNum != null" >
+        store_num,
+      </if>
+      <if test="storeName != null" >
+        store_name,
+      </if>
+      <if test="businessName != null" >
+        business_name,
+      </if>
+      <if test="areaName != null" >
+        area_name,
+      </if>
+      <if test="storeLeaderCode != null" >
+        store_leader_code,
+      </if>
+      <if test="storeLeaderName != null" >
+        store_leader_name,
+      </if>
+      <if test="storeAgentCode != null" >
+        store_agent_code,
+      </if>
+      <if test="storeAgentName != null" >
+        store_agent_name,
+      </if>
+      <if test="agentCode != null" >
+        agent_code,
+      </if>
+      <if test="houseProduct != null" >
+        house_product,
+      </if>
+      <if test="rental != null" >
+        rental,
+      </if>
+      <if test="payment != null" >
+        payment,
+      </if>
+      <if test="contractState != null" >
+        contract_state,
+      </if>
+      <if test="contractType != null" >
+        contract_type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="sysContractId != null" >
+        #{sysContractId,jdbcType=INTEGER},
+      </if>
+      <if test="sysRoomId != null" >
+        #{sysRoomId,jdbcType=INTEGER},
+      </if>
+      <if test="sysHouseId != null" >
+        #{sysHouseId,jdbcType=INTEGER},
+      </if>
+      <if test="sysCustId != null" >
+        #{sysCustId,jdbcType=INTEGER},
+      </if>
+      <if test="custCode != null" >
+        #{custCode,jdbcType=VARCHAR},
+      </if>
+      <if test="houseCode != null" >
+        #{houseCode,jdbcType=VARCHAR},
+      </if>
+      <if test="roomCode != null" >
+        #{roomCode,jdbcType=VARCHAR},
+      </if>
+      <if test="contractCode != null" >
+        #{contractCode,jdbcType=VARCHAR},
+      </if>
+      <if test="securityCode != null" >
+        #{securityCode,jdbcType=VARCHAR},
+      </if>
+      <if test="cycle != null" >
+        #{cycle,jdbcType=VARCHAR},
+      </if>
+      <if test="vacancy != null" >
+        #{vacancy,jdbcType=VARCHAR},
+      </if>
+      <if test="signDate != null" >
+        #{signDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="effectDate != null" >
+        #{effectDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="stopDate != null" >
+        #{stopDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="storeNum != null" >
+        #{storeNum,jdbcType=VARCHAR},
+      </if>
+      <if test="storeName != null" >
+        #{storeName,jdbcType=VARCHAR},
+      </if>
+      <if test="businessName != null" >
+        #{businessName,jdbcType=VARCHAR},
+      </if>
+      <if test="areaName != null" >
+        #{areaName,jdbcType=VARCHAR},
+      </if>
+      <if test="storeLeaderCode != null" >
+        #{storeLeaderCode,jdbcType=VARCHAR},
+      </if>
+      <if test="storeLeaderName != null" >
+        #{storeLeaderName,jdbcType=VARCHAR},
+      </if>
+      <if test="storeAgentCode != null" >
+        #{storeAgentCode,jdbcType=VARCHAR},
+      </if>
+      <if test="storeAgentName != null" >
+        #{storeAgentName,jdbcType=VARCHAR},
+      </if>
+      <if test="agentCode != null" >
+        #{agentCode,jdbcType=VARCHAR},
+      </if>
+      <if test="houseProduct != null" >
+        #{houseProduct,jdbcType=VARCHAR},
+      </if>
+      <if test="rental != null" >
+        #{rental,jdbcType=VARCHAR},
+      </if>
+      <if test="payment != null" >
+        #{payment,jdbcType=VARCHAR},
+      </if>
+      <if test="contractState != null" >
+        #{contractState,jdbcType=VARCHAR},
+      </if>
+      <if test="contractType != null" >
+        #{contractType,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="count" parameterType="cn.ziroom.contract.domain.Contract" resultType="java.lang.Integer" >
+    select count(*) from t_contract
+  </select>
+  <update id="update" parameterType="cn.ziroom.contract.domain.Contract" >
+    update t_contract
+    <set>
+      <if test="sysContractId != null" >
+        sys_contract_id = #{sysContractId,jdbcType=INTEGER},
+      </if>
+      <if test="sysRoomId != null" >
+        sys_room_id = #{sysRoomId,jdbcType=INTEGER},
+      </if>
+      <if test="sysHouseId != null" >
+        sys_house_id = #{sysHouseId,jdbcType=INTEGER},
+      </if>
+      <if test="sysCustId != null" >
+        sys_cust_id = #{sysCustId,jdbcType=INTEGER},
+      </if>
+      <if test="custCode != null" >
+        cust_code = #{custCode,jdbcType=VARCHAR},
+      </if>
+      <if test="houseCode != null" >
+        house_code = #{houseCode,jdbcType=VARCHAR},
+      </if>
+      <if test="roomCode != null" >
+        room_code = #{roomCode,jdbcType=VARCHAR},
+      </if>
+      <if test="contractCode != null" >
+        contract_code = #{contractCode,jdbcType=VARCHAR},
+      </if>
+      <if test="securityCode != null" >
+        security_code = #{securityCode,jdbcType=VARCHAR},
+      </if>
+      <if test="cycle != null" >
+        cycle = #{cycle,jdbcType=VARCHAR},
+      </if>
+      <if test="vacancy != null" >
+        vacancy = #{vacancy,jdbcType=VARCHAR},
+      </if>
+      <if test="signDate != null" >
+        sign_date = #{signDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="effectDate != null" >
+        effect_date = #{effectDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="stopDate != null" >
+        stop_date = #{stopDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="storeNum != null" >
+        store_num = #{storeNum,jdbcType=VARCHAR},
+      </if>
+      <if test="storeName != null" >
+        store_name = #{storeName,jdbcType=VARCHAR},
+      </if>
+      <if test="businessName != null" >
+        business_name = #{businessName,jdbcType=VARCHAR},
+      </if>
+      <if test="areaName != null" >
+        area_name = #{areaName,jdbcType=VARCHAR},
+      </if>
+      <if test="storeLeaderCode != null" >
+        store_leader_code = #{storeLeaderCode,jdbcType=VARCHAR},
+      </if>
+      <if test="storeLeaderName != null" >
+        store_leader_name = #{storeLeaderName,jdbcType=VARCHAR},
+      </if>
+      <if test="storeAgentCode != null" >
+        store_agent_code = #{storeAgentCode,jdbcType=VARCHAR},
+      </if>
+      <if test="storeAgentName != null" >
+        store_agent_name = #{storeAgentName,jdbcType=VARCHAR},
+      </if>
+      <if test="agentCode != null" >
+        agent_code = #{agentCode,jdbcType=VARCHAR},
+      </if>
+      <if test="houseProduct != null" >
+        house_product = #{houseProduct,jdbcType=VARCHAR},
+      </if>
+      <if test="rental != null" >
+        rental = #{rental,jdbcType=VARCHAR},
+      </if>
+      <if test="payment != null" >
+        payment = #{payment,jdbcType=VARCHAR},
+      </if>
+      <if test="contractState != null" >
+        contract_state = #{contractState,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where sys_contract_id = #{sysContractId,jdbcType=INTEGER} and contract_type = #{contractType,jdbcType=VARCHAR}
+  </update>
+</mapper>
